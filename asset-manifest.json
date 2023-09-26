@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/project2_movie/static/css/main.75d0377f.css",
+    "main.js": "/project2_movie/static/js/main.c2d263cd.js",
+    "static/js/787.88f02061.chunk.js": "/project2_movie/static/js/787.88f02061.chunk.js",
+    "static/media/logo.png": "/project2_movie/static/media/logo.8811260fa150bc974fa6.png",
+    "static/media/film-frame.jpg": "/project2_movie/static/media/film-frame.ddb0e352b5c64cf25de7.jpg",
+    "index.html": "/project2_movie/index.html",
+    "main.75d0377f.css.map": "/project2_movie/static/css/main.75d0377f.css.map",
+    "main.c2d263cd.js.map": "/project2_movie/static/js/main.c2d263cd.js.map",
+    "787.88f02061.chunk.js.map": "/project2_movie/static/js/787.88f02061.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.75d0377f.css",
+    "static/js/main.c2d263cd.js"
+  ]
+}
