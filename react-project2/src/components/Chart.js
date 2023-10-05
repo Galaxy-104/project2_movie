@@ -1,9 +1,9 @@
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js/auto";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, scales, plugins } from "chart.js/auto";
 import { Bar } from 'react-chartjs-2'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { useEffect, useState } from "react";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, scales, plugins );
 
 function Chart({ dataArr }){
     const [ labels, setLabels ] = useState([])
@@ -49,6 +49,9 @@ function Chart({ dataArr }){
                 labels: {
                     color: "#fff"
                 }
+            },
+            scales: {
+
             }
         }
     }

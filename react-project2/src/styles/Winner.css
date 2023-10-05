@@ -103,10 +103,14 @@
     object-fit: fill;
     object-position: center;
 }
+
+/* 가장 좋아하는 장르 */
 .result-container .favorite{
     grid-column: 1 / 4;
     grid-row: 4 / 5;
+    display: flex;
 }
+
 /* 통계 */
 .result-container .stats{
     grid-column: 1 / 4;

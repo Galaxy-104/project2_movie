@@ -12,6 +12,7 @@ import Logo from "../assets/logo.png"
 import { ReactComponent as MedalGold } from "../assets/medal-gold.svg"
 import { ReactComponent as MedalSilver } from "../assets/medal-silver.svg"
 import { ReactComponent as MedalBronze } from "../assets/medal-bronze.svg"
+import { ReactComponent as Crown } from "../assets/royal-crown.svg"
 
 
 function Winner(){
@@ -21,9 +22,11 @@ function Winner(){
     const gohome = () => {
         navigate('/login')
     }
-    const [recommendMovies, setRecommendMovies] = useState([])
-    const [genreData, setGenreData] = useState([])
-    const [genresRank, setGenresRank] = useState([])
+    const [ recommendMovies, setRecommendMovies ] = useState([])
+    const [ genreData, setGenreData ] = useState([])
+    const [ genresRank, setGenresRank ] = useState([])
+
+    const [ favoriteGenre, setFavoriteGenre ] = useState([])
 
     useEffect(() => {
         const getFavoriteGenreMovies = async (win) => {
@@ -37,9 +40,9 @@ function Winner(){
             const recommendGenres = []
 
             const findMovies = () => {
-                console.log(winnerMoviesGenre, win)
                 const filterMovies = [...winnerMoviesGenre]
                 const indices = []
+
                 while(indices.length < 3){
                     let index = Math.floor(Math.random() * filterMovies[0].movies.length)
                     if(!indices.includes(index) && win.id !== filterMovies[0].movies[index].id){
@@ -65,10 +68,23 @@ function Winner(){
                 setGenreData([...data.results])
                 setGenresRank([...data.results.sort((a, b) => b.likes - a.likes)]) 
                 
-            })            
+            })   
         }
         getFavoriteGenreMovies(winner[0])
     }, [])
+
+    useEffect(() => {
+        if(genreData.length !== 0){
+        //    console.log(genreData, winnerMoviesGenre)
+           const favorite = genreData.filter((genre) => {
+                    return genre.id === winnerMoviesGenre[0].code
+                })
+           setFavoriteGenre([...favorite])
+           console.log(favorite[0].name)
+            
+        }
+    }, [genreData])
+
 
     return (
         <div className="winner-page">
@@ -99,8 +115,18 @@ function Winner(){
                     </motion.button>
                 </div>
                 <div className="favorite">
-                    <h2 className="favorite-msg"></h2>
-                    <div className="favorite-genre"></div>
+                    <div className="crown-icon">
+                        <Crown/>
+                    </div>
+                    <h2 className="favorite-msg">가장 좋아하는 장르는</h2>
+                    <div className="favorite-genre">
+                        <span className="favorite-name">{favoriteGenre.length === 0? "" : `${favoriteGenre[0].name}`}</span>
+                        <div className="favorite-percent">
+                            <div className="percent-bar">
+                                <span className="percent-text"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="stats">
                     <div className="genres-rank">
