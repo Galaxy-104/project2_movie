@@ -26,7 +26,7 @@ function Winner(){
     const [genresRank, setGenresRank] = useState([])
 
     useEffect(() => {
-        const getFavoriteGenreMovies = async () => {
+        const getFavoriteGenreMovies = async (win) => {
 
             const data = await fetch('/api/Tournament.json')
             const res = await data.json()
@@ -37,12 +37,12 @@ function Winner(){
             const recommendGenres = []
 
             const findMovies = () => {
-                console.log(winnerMoviesGenre)
+                console.log(winnerMoviesGenre, win)
                 const filterMovies = [...winnerMoviesGenre]
                 const indices = []
                 while(indices.length < 3){
                     let index = Math.floor(Math.random() * filterMovies[0].movies.length)
-                    if(!indices.includes(index)){
+                    if(!indices.includes(index) && win.id !== filterMovies[0].movies[index].id){
                         indices.push(index)
                     }
                 }
@@ -67,7 +67,7 @@ function Winner(){
                 
             })            
         }
-        getFavoriteGenreMovies()
+        getFavoriteGenreMovies(winner[0])
     }, [])
 
     return (
