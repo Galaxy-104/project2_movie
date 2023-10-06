@@ -68,6 +68,8 @@ function Form({type, handleClick}){
   }
 
   //로그인정보가 틀리면 빨간색보더로 변경해주기
+  
+
   //회원가입시 이미 존재하는 이메일이면 input창 벗어났을때 바로 알려주기  
   if(type == 'login'){
     return(

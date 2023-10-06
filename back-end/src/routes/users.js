@@ -31,4 +31,9 @@ router.post('/signup', expressAsyncHandler(async (req, res, next) => {
   }
 }))
 
+// 로그인
+router.post('/login', expressAsyncHandler(async (req, res, next) => {
+  
+}))
+
 module.exports = router
