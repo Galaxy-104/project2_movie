@@ -8,6 +8,8 @@ import Genres from '../api/Genres.json'
 
 function Form({type, handleClick, genreLists}){
 
+  const [disabled, setDisabled] = useState(false)
+
   //로그인 인풋 꾸미기
   const addClass = (e) => {
     // console.log(e.target)
@@ -21,15 +23,16 @@ function Form({type, handleClick, genreLists}){
           e.target.classList.add('error')
           label.classList.add('errorfont')
           label.innerText = '이메일 형식이 올바르지 않습니다.'
-          console.log(loginBtn)
-          console.log(e.target.parentElement.parentElement)
-          console.log(e.target.parentElement.parentElement.lastElementChild)
+          console.log(e.target.classList.contains('error'))
+          console.log(e.target)
+          e.target.classList.contains('error') ? setDisabled(true) :  setDisabled(false)
           //이메일 형식이 올바르지 않으면 다음 버튼 비활성화 ( disabled )
           //나중에 회원가입email중복검사도 여기서
         }else if(checkEmail(e.target.value) === true){  //이메일 형식이 올바를때
           e.target.classList.remove('error')
           label.classList.remove('errorfont')
           label.innerText = '이메일을 입력하세요'
+          e.target.classList.contains('error') ? setDisabled(true) :  setDisabled(false)
         }
       }
       // if(e.target.id == 'loginPw'){  //나중에 비밀번호 자리수 제한걸기
@@ -75,6 +78,7 @@ function Form({type, handleClick, genreLists}){
     console.log('email:', signUpEmail)
     console.log('pw:', signUpPw)
     console.log('pw2:', signUpPw2)
+    //이메일형식이 올바르지 않거나 비밀번호가 서로 다르면 버튼 비활성화
 
   }
 
@@ -106,12 +110,11 @@ function Form({type, handleClick, genreLists}){
   //로그인 누르면 홈페이지로 이동
   const navigate = useNavigate()
   const login = (e) => {
-    const loginId = e.target.parentElement.firstElementChild.lastElementChild.value
-    const loginPw = e.target.parentElement.firstElementChild.nextElementSibling.lastElementChild.value
-
-    console.log('id:',loginId)
-    console.log('pw:',loginPw)
-    navigate('/home')
+    const loginId = e.target.parentElement.firstElementChild.lastElementChild
+    const loginPw = e.target.parentElement.firstElementChild.nextElementSibling.lastElementChild
+    console.log('id:',loginId.value)
+    console.log('pw:',loginPw.value)
+    // navigate('/home')
   }
 
   
@@ -151,7 +154,7 @@ function Form({type, handleClick, genreLists}){
           <p className="labelname">비밀번호를 입력하세요</p>
           <input onChange={addClass} type='password' id='loginPw'></input>
         </label>
-        <Button btnClass='loginbtn' handleClick={login}>로그인</Button>
+        <Button btnClass='loginbtn' handleClick={login} disabled={disabled}>로그인</Button>
         <p className="registerbtn" onClick={goSignup}>아직 회원이 아니신가요?</p>
         <p className="registerbtn" onClick={goworldcup}>이상형 월드컵 다시 하러 가기</p>
       </div>
@@ -176,7 +179,7 @@ function Form({type, handleClick, genreLists}){
           <p className="labelname">비밀번호를 다시 입력하세요</p>
           <input onChange={addClass} type='password' id='userPw2'></input>
         </label>
-        <Button btnClass='loginbtn' handleClick={goCheckBox}>다음</Button>
+        <Button btnClass='loginbtn' handleClick={goCheckBox} disabled={disabled}>다음</Button>
       </div>
     )
   }else if(type == 'checkBox'){

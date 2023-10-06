@@ -63,6 +63,7 @@ function Winner(){
             })
             .then(res => res.json())
             .then((data) => {
+                console.log(data)
                 setGenreData([...data.results])
                 setGenresRank([...data.results.sort((a, b) => b.likes - a.likes)]) 
                 

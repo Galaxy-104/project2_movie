@@ -96,6 +96,7 @@
     height: 5rem;
     transition: .5s;
     border: none;
+    cursor: pointer;
 }
 .result-container .move-to-login .mood-join-btn img{
     width: 100%;

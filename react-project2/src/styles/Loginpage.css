@@ -93,7 +93,7 @@
   opacity: 0;
 }
 .downbtn-up{
-  margin: -1rem 0;
+  margin: 3rem 0;
   opacity: 1;
 }
 
@@ -103,7 +103,7 @@
   width: 100%;
 }
 .introText3-up{
-  top: 0rem;
+  top: 5rem;
   opacity: 1;
 }
 .intro span{

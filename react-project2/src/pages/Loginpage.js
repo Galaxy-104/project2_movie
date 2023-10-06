@@ -24,7 +24,7 @@ function Loginpage(){
     
   //form화면으로 슬라이드
   const gofrom = () => {
-    window.scrollTo({top:850, behavior:"smooth"})
+    window.scrollTo({top:950, behavior:"smooth"})
   }
   
   const location = useLocation()
