@@ -10,10 +10,6 @@
     position: relative;
 }
 
-.result-container > div{
-    border: 1px solid #909090;
-}
-
 /* 이상형 월드컵 1등 영화 */
 .result-container .poster{
     grid-column: 1 / 2;
@@ -22,6 +18,13 @@
     justify-content: center;
     align-items: center;
     align-self: flex-end;
+    position: relative;
+}
+.result-container .poster .champion{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 2.5rem;
 }
 .result-container .poster .player{
     box-shadow: none;
@@ -85,17 +88,19 @@
 }
 .result-container .move-to-login .mood-join-msg{
     text-align: right;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     margin: 0;
     letter-spacing: 1px;
     text-shadow: none;
+    color: rgba(255, 255, 255, 0.6);
 }
 .result-container .move-to-login .mood-join-btn{
     background: none;
-    width: 20rem;
-    height: 5rem;
+    width: 16rem;
+    height: 4rem;
     transition: .5s;
     border: none;
+    cursor: pointer;
 }
 .result-container .move-to-login .mood-join-btn img{
     width: 100%;
@@ -153,6 +158,9 @@
     border-radius: .5rem;
     overflow: hidden;
 }
+.result-container .favorite .favorite-genre .favorite-rank .favorite-percent .percent-text{
+    right: -3.8rem;
+}
 
 /* 통계 */
 .result-container .stats{
@@ -163,16 +171,16 @@
     align-items: center; 
 }
 .result-container .stats .genres-rank{
-    width: 50%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    margin-right: 2rem;
 }
 .result-container .stats .genres-rank .rank-info{
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin: .5rem 0;
 }
 .result-container .stats .genres-rank .rank-info > span{
     margin-right: 1rem;

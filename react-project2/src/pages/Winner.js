@@ -4,8 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { BiRightArrowAlt } from "react-icons/bi"
 import { motion } from "framer-motion"
 
-import Chart from "../components/Chart";
-import WinnerPlayer from "../components/winnerPlayer"
+import GenreChart from "../components/GenreChart";
+import WinnerPlayer from "../components/WinnerPlayer"
 
 import '../styles/Winner.css'
 import Logo from "../assets/logo.png"
@@ -13,6 +13,7 @@ import { ReactComponent as MedalGold } from "../assets/medal-gold.svg"
 import { ReactComponent as MedalSilver } from "../assets/medal-silver.svg"
 import { ReactComponent as MedalBronze } from "../assets/medal-bronze.svg"
 import { ReactComponent as Crown } from "../assets/crown.svg"
+
 
 
 function Winner(){
@@ -130,7 +131,7 @@ function Winner(){
                             if(favoriteGenre[0].id === genre.id){
                                 console.log(favoriteGenre, genre)
                                 return (
-                                    <div className="favorite-rank">
+                                    <div className="favorite-rank" key={`winner-${genre.name}`}>
                                         {index === 1 ? <MedalGold/> :
                                             index === 2 ? <MedalSilver/> :
                                             index === 3 ? <MedalBronze/> : ""
@@ -177,7 +178,8 @@ function Winner(){
                         })}
                     </div>
                     <div className="genres-chart">
-                        {genreData.length === 0? "" : <Chart dataArr={genreData}/>}   
+                        {/* <Chart dataArr={genreData}/> */}
+                        {genreData.length === 0? "" : <GenreChart dataArr={genreData}/>}   
                     </div>
                 </div>
             </div>
