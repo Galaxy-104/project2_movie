@@ -8,39 +8,100 @@ import Genres from '../api/Genres.json'
 
 function Form({type, handleClick, genreLists}){
 
-  const [disabled, setDisabled] = useState(false)
+  const [disabled, setDisabled] = useState(true)
 
-  //로그인 인풋 꾸미기
+  //인풋꾸미기에서 인풋기능들이 추가되버린..
   const addClass = (e) => {
     // console.log(e.target)
     // console.log(e.target.value)
     const label = e.target.previousElementSibling
-    const loginBtn = document.querySelector('.loginbtn')
-    if(e.target.value !== ''){ //로그인 인풋이 빈칸일때
+    //로그인 인풋이 빈칸일때
+    if(e.target.value !== ''){ 
       label.classList.add('forcusing')
-      if(e.target.id == 'loginEmail'|| e.target.id == 'userEmail'){ //이메일칸만 적용
-        if(checkEmail(e.target.value) === false){ //이메일 형식이 올바르지 않을때
+      //이메일칸만 적용
+      if(e.target.id === 'loginEmail'|| e.target.id === 'userEmail'){
+        //이메일 형식이 올바르지 않을때
+        if(checkEmail(e.target.value) === false){
           e.target.classList.add('error')
           label.classList.add('errorfont')
           label.innerText = '이메일 형식이 올바르지 않습니다.'
-          console.log(e.target.classList.contains('error'))
-          console.log(e.target)
-          e.target.classList.contains('error') ? setDisabled(true) :  setDisabled(false)
-          //이메일 형식이 올바르지 않으면 다음 버튼 비활성화 ( disabled )
           //나중에 회원가입email중복검사도 여기서
-        }else if(checkEmail(e.target.value) === true){  //이메일 형식이 올바를때
+        //이메일 형식이 올바를때
+        }else if(checkEmail(e.target.value) === true){ 
           e.target.classList.remove('error')
           label.classList.remove('errorfont')
           label.innerText = '이메일을 입력하세요'
-          e.target.classList.contains('error') ? setDisabled(true) :  setDisabled(false)
         }
       }
       // if(e.target.id == 'loginPw'){  //나중에 비밀번호 자리수 제한걸기
       // }
+      //회원가입 비밀번호 같은지 확인
+      else if(e.target.id === 'userPw' || e.target.id === 'userPw2'){ 
+        console.log(e.target.value)
+        const userPw =document.getElementById('userPw')
+        const userPw2 =document.getElementById('userPw2')
+        console.log(userPw2.value)
+        //비밀번호가 다를경우
+        if(userPw.value !== userPw2.value){ 
+          userPw.classList.add('error')
+          userPw.parentElement.firstElementChild.classList.add('errorfont')
+          userPw2.classList.add('error')
+          userPw2.parentElement.firstElementChild.classList.add('errorfont')
+          userPw2.parentElement.firstElementChild.innerText = '비밀번호를 똑같이 입력해주세요'
+          setDisabled(true)
+        //비밀번호가 같은 경우
+        }else if(userPw.value === userPw2.value){ 
+          userPw.classList.remove('error')
+          userPw.parentElement.firstElementChild.classList.remove('errorfont')
+          e.target.classList.remove('error')
+          userPw2.classList.remove('error')
+          userPw2.parentElement.firstElementChild.classList.remove('errorfont')
+          userPw2.parentElement.firstElementChild.innerText = '비밀번호가 같습니다'
+          setDisabled(false)
+        }
+      }
     }else{
       label.classList.remove('forcusing')
       label.classList.remove('errorfont')
-      label.innerText = '이메일을 입력하세요'
+
+      console.log(e.target.value)
+      //이메일칸이 빈칸일때 원래 텍스트로 돌아오기
+      if(label.nextElementSibling.id === 'loginEmail' || label.nextElementSibling.id === 'userEmail'){ //이메일칸
+        label.innerText = '이메일을 입력하세요'
+      //pw가 빈칸일때 pw2스타일 제거후 원래 텍스트로 돌아오기
+      }else if(label.nextElementSibling.id === 'userPw'){
+        setDisabled(true)
+        const pw2Label = label.parentElement.nextElementSibling
+        console.log(pw2Label.lastElementChild.value)
+        console.log(pw2Label.lastElementChild)
+        console.log(pw2Label.firstElementChild)
+        if(pw2Label.lastElementChild.value === ''){
+          pw2Label.lastElementChild.classList.remove('error')
+          pw2Label.firstElementChild.classList.remove('errorfont')
+          pw2Label.firstElementChild.innerText = '비밀번호를 다시 입력하세요'
+        //한번에 지웠을때 에러 적용시키기
+        }else{
+          pw2Label.lastElementChild.classList.add('error')
+          pw2Label.firstElementChild.classList.add('errorfont')
+          pw2Label.firstElementChild.innerText = '비밀번호를 똑같이 입력해주세요'
+          setDisabled(true)
+        }
+      //pw2가 빈칸일때 pw스타일 제거
+      }else if(label.nextElementSibling.id === 'userPw2'){
+        label.innerText = '비밀번호를 다시 입력하세요'
+        const pwLabel = label.parentElement.previousElementSibling
+        console.log(pwLabel)
+        console.log(pwLabel.firstElementChild)
+        if(pwLabel.lastElementChild.value === ''){
+          pwLabel.lastElementChild.classList.remove('error')
+          pwLabel.firstElementChild.classList.remove('errorfont')
+        }else{
+          pwLabel.lastElementChild.classList.add('error')
+          pwLabel.firstElementChild.classList.add('errorfont')
+          setDisabled(true)
+        }
+      }
+
       e.target.classList.remove('error')
     }
   }
@@ -61,7 +122,9 @@ function Form({type, handleClick, genreLists}){
     const registerBox = document.querySelector('.Register')
     loginBox.classList.add('goleft')
     registerBox.classList.add('goleft')
+    
   }
+
   //좋아하는 장르 체크 페이지 보이기
   const goCheckBox = (e) => {
     const registerBox = document.querySelector('.Register')
@@ -186,7 +249,7 @@ function Form({type, handleClick, genreLists}){
     // console.log(Genres)
     return(
       <div className="check-box base">
-        <h4>좋아하는 장르를 선택해주세요!</h4>
+        <h4>좋아하는 장르를 3개 이상 선택해주세요!</h4>
           <div className="input-box">
             {Genres.genres.map((genre,id) => {
               // console.log(genre)
