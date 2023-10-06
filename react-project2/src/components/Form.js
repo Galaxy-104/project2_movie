@@ -25,22 +25,35 @@ function Form({type, handleClick, genreLists}){
           e.target.classList.add('error')
           label.classList.add('errorfont')
           label.innerText = '이메일 형식이 올바르지 않습니다.'
+          setDisabled(true)
+          
           //나중에 회원가입email중복검사도 여기서
         //이메일 형식이 올바를때
         }else if(checkEmail(e.target.value) === true){ 
           e.target.classList.remove('error')
           label.classList.remove('errorfont')
           label.innerText = '이메일을 입력하세요'
+
+          const loginPw = document.getElementById('loginPw')
+          loginPw.value !== '' ? setDisabled(false) : setDisabled(true)
+        }
+      }else if(e.target.id === 'loginPw'){
+        const loginEmail = e.target.parentElement.previousElementSibling.lastElementChild
+        if(e.target.value !== '' && !loginEmail.classList.contains('error')){
+          setDisabled(false)
+        }else{
+          
+          setDisabled(true)
         }
       }
       // if(e.target.id == 'loginPw'){  //나중에 비밀번호 자리수 제한걸기
       // }
       //회원가입 비밀번호 같은지 확인
       else if(e.target.id === 'userPw' || e.target.id === 'userPw2'){ 
-        console.log(e.target.value)
+        // console.log(e.target.value)
         const userPw =document.getElementById('userPw')
         const userPw2 =document.getElementById('userPw2')
-        console.log(userPw2.value)
+        // console.log(userPw2.value)
         //비밀번호가 다를경우
         if(userPw.value !== userPw2.value){ 
           userPw.classList.add('error')
@@ -63,14 +76,13 @@ function Form({type, handleClick, genreLists}){
     }else{
       label.classList.remove('forcusing')
       label.classList.remove('errorfont')
-
+      setDisabled(true)
       console.log(e.target.value)
       //이메일칸이 빈칸일때 원래 텍스트로 돌아오기
       if(label.nextElementSibling.id === 'loginEmail' || label.nextElementSibling.id === 'userEmail'){ //이메일칸
         label.innerText = '이메일을 입력하세요'
       //pw가 빈칸일때 pw2스타일 제거후 원래 텍스트로 돌아오기
       }else if(label.nextElementSibling.id === 'userPw'){
-        setDisabled(true)
         const pw2Label = label.parentElement.nextElementSibling
         console.log(pw2Label.lastElementChild.value)
         console.log(pw2Label.lastElementChild)
@@ -84,7 +96,6 @@ function Form({type, handleClick, genreLists}){
           pw2Label.lastElementChild.classList.add('error')
           pw2Label.firstElementChild.classList.add('errorfont')
           pw2Label.firstElementChild.innerText = '비밀번호를 똑같이 입력해주세요'
-          setDisabled(true)
         }
       //pw2가 빈칸일때 pw스타일 제거
       }else if(label.nextElementSibling.id === 'userPw2'){
@@ -98,7 +109,6 @@ function Form({type, handleClick, genreLists}){
         }else{
           pwLabel.lastElementChild.classList.add('error')
           pwLabel.firstElementChild.classList.add('errorfont')
-          setDisabled(true)
         }
       }
 
@@ -146,28 +156,39 @@ function Form({type, handleClick, genreLists}){
   }
 
   //회원가입 확인창 보이기
+  let arr = []
   const goresult = () => {
-    let arr = []
+    
     const checkBox = document.querySelector('.check-box')
     const doneBox = document.querySelector('.done')
-    const inputBoxs = document.querySelectorAll('.inputs')
-
-    //장르 체크된것 추출
-    inputBoxs.forEach(inputBox => {
-      // console.log(inputBox)
-      const isChecked = inputBox.firstElementChild.checked
-      if(isChecked){
-        console.log(inputBox.firstElementChild.value)
-        return arr.push(inputBox.firstElementChild.value)
-      }
-    })
+    
     checkBox.classList.add('goleft3') 
     doneBox.classList.add('goleft3')
     
     console.log(arr)
-
     //데이터를 저장해서 좋아하는 장르에 있는 데이터를 fetch해서 메인페이지로 가져와야하나?
     //암튼 여기서 fetch post로 유저 등록
+  }
+  
+  const checkInputs = () => {
+    const inputBoxs = document.querySelectorAll('.inputs')
+    //장르 체크된것 추출
+    
+    inputBoxs.forEach(inputBox => {
+      //체크되어 들어온 장르 미리 배열에 담기
+      const isChecked = inputBox.firstElementChild.checked
+      console.log(isChecked)
+      if(isChecked){
+        // console.log(inputBox.firstElementChild.value)
+        return arr.indexOf(inputBox.firstElementChild.value) == -1 && arr.push(inputBox.firstElementChild.value)
+      }else if(!isChecked){
+        console.log(inputBox.firstElementChild.value)
+        return arr.filter((arr) => arr == inputBox.firstElementChild.value)
+      }
+    })
+    console.log(arr)
+    arr.length > 2 ? setDisabled(false) : setDisabled(true)
+    return arr
   }
 
   //로그인 누르면 홈페이지로 이동
@@ -177,6 +198,7 @@ function Form({type, handleClick, genreLists}){
     const loginPw = e.target.parentElement.firstElementChild.nextElementSibling.lastElementChild
     console.log('id:',loginId.value)
     console.log('pw:',loginPw.value)
+
     // navigate('/home')
   }
 
@@ -204,7 +226,6 @@ function Form({type, handleClick, genreLists}){
   const goworldcup = () => {
     navigate('/')
   }
-  //로그인정보가 틀리면 빨간색보더로 변경해주기
   //회원가입시 이미 존재하는 이메일이면 input창 벗어났을때 바로 알려주기  
   if(type == 'login'){
     return(
@@ -255,13 +276,13 @@ function Form({type, handleClick, genreLists}){
               // console.log(genre)
               return(
                 <div className="inputs" key={id}>
-                  <input type='checkbox' id={genre.name} value={genre.name} onClick={handleClick} defaultChecked={genreLists && genreLists.includes(genre.id) && 'on'}/>
+                  <input type='checkbox' name='genre' id={genre.name} value={genre.name} onClick={checkInputs} defaultChecked={genreLists && genreLists.includes(genre.id) && 'on'}/>
                   <label htmlFor={genre.name}>{genre.name}</label>
                 </div>
               )
             })}
           </div>
-          <Button btnClass='signupOK' handleClick={goresult}>가입완료하기</Button>
+          <Button btnClass='signupOK' handleClick={goresult} disabled={disabled}>가입완료하기</Button>
         </div>
     )
   }else if(type == 'done'){
