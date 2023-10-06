@@ -13,6 +13,7 @@ import { ReactComponent as MedalGold } from "../assets/medal-gold.svg"
 import { ReactComponent as MedalSilver } from "../assets/medal-silver.svg"
 import { ReactComponent as MedalBronze } from "../assets/medal-bronze.svg"
 import { ReactComponent as Crown } from "../assets/crown.svg"
+import { ReactComponent as Point } from "../assets/point.svg"
 
 
 
@@ -96,7 +97,7 @@ function Winner(){
 
                 <div className="recommend">
                     <div className="recommend-header">
-                        <h2>추천 영화</h2>
+                        <h2>이런 영화는 어떠세요?</h2>
                     </div>
 
                     <div className="recommend-movies">
