@@ -9,6 +9,7 @@ import Genres from '../api/Genres.json'
 function Form({type, handleClick, genreLists}){
 
   const [disabled, setDisabled] = useState(true)
+  const [checked, setChecked] = useState(genreLists)
 
   //인풋꾸미기에서 인풋기능들이 추가되버린..
   const addClass = (e) => {
@@ -151,12 +152,13 @@ function Form({type, handleClick, genreLists}){
     console.log('email:', signUpEmail)
     console.log('pw:', signUpPw)
     console.log('pw2:', signUpPw2)
-    //이메일형식이 올바르지 않거나 비밀번호가 서로 다르면 버튼 비활성화
 
+    setDisabled(false)
   }
 
   //회원가입 확인창 보이기
   let arr = []
+  
   const goresult = () => {
     
     const checkBox = document.querySelector('.check-box')
@@ -165,11 +167,14 @@ function Form({type, handleClick, genreLists}){
     checkBox.classList.add('goleft3') 
     doneBox.classList.add('goleft3')
     
-    console.log(arr)
+    console.log(checked)
     //데이터를 저장해서 좋아하는 장르에 있는 데이터를 fetch해서 메인페이지로 가져와야하나?
+    //ㄴ이렇게해야 회원가입안거치고 바로 로그인했을때 장르연동됨
     //암튼 여기서 fetch post로 유저 등록
   }
   
+  //자동체크된것 바로 버튼활성화 안되는것 해결하기
+  //로그아웃후 새로 내가 클릭해서 담은 장르들은 연동안됨
   const checkInputs = () => {
     const inputBoxs = document.querySelectorAll('.inputs')
     //장르 체크된것 추출
@@ -179,18 +184,26 @@ function Form({type, handleClick, genreLists}){
       const isChecked = inputBox.firstElementChild.checked
       console.log(isChecked)
       if(isChecked){
-        // console.log(inputBox.firstElementChild.value)
-        return arr.indexOf(inputBox.firstElementChild.value) == -1 && arr.push(inputBox.firstElementChild.value)
-      }else if(!isChecked){
         console.log(inputBox.firstElementChild.value)
-        return arr.filter((arr) => arr == inputBox.firstElementChild.value)
+        arr.indexOf(inputBox.firstElementChild.value) == -1 && arr.push(inputBox.firstElementChild.value)
+        console.log(arr)
+        return setChecked(arr)
       }
+      // console.log(checked)
+      arr.length > 2 ? setDisabled(false) : setDisabled(true)
     })
-    console.log(arr)
-    arr.length > 2 ? setDisabled(false) : setDisabled(true)
-    return arr
+    return checked
   }
+    console.log(checked)
+  useEffect(() => {
+    const signupOKBtn = document.querySelector('.signupOK')
+    checked && checked.length > 2 ? signupOKBtn.disabled = false : signupOKBtn.disabled = true
+    console.log('버튼 활성화:',signupOKBtn.disabled)
+    console.log('체크:',checked)
+    console.log('버튼비활성화state:',disabled)
+    console.log('장르3개이상:',checked && checked.length > 2)
 
+  })
   //로그인 누르면 홈페이지로 이동
   const navigate = useNavigate()
   const login = (e) => {
@@ -199,7 +212,7 @@ function Form({type, handleClick, genreLists}){
     console.log('id:',loginId.value)
     console.log('pw:',loginPw.value)
 
-    // navigate('/home')
+    navigate('/home',{state:{checked}})
   }
 
   
@@ -276,7 +289,7 @@ function Form({type, handleClick, genreLists}){
               // console.log(genre)
               return(
                 <div className="inputs" key={id}>
-                  <input type='checkbox' name='genre' id={genre.name} value={genre.name} onClick={checkInputs} defaultChecked={genreLists && genreLists.includes(genre.id) && 'on'}/>
+                  <input type='checkbox' name='genre' id={genre.name} value={genre.id} onClick={checkInputs} defaultChecked={genreLists && genreLists.includes(genre.id) && 'on'}/>
                   <label htmlFor={genre.name}>{genre.name}</label>
                 </div>
               )
