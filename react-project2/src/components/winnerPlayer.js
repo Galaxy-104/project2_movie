@@ -1,5 +1,6 @@
 import React from "react"
 import { motion, AnimatePresence } from 'framer-motion'
+import { ReactComponent as Champion } from "../assets/winner.svg"
 
 import '../styles/Player.css'
 
@@ -20,6 +21,7 @@ function WinnerPlayer({ player, handleClick, direction, isVisible, className }){
                     // exit={{ opacity: 0, y: 20 }}
                 >
                     <div className="player-img">
+                        <Champion/>
                         <img src={`https://image.tmdb.org/t/p/original/${player.poster_path}`} alt={`${player.title}`}/>                                           
                     </div>
                     

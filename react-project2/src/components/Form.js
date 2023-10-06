@@ -135,6 +135,9 @@ function Form({type, handleClick, genreLists}){
     
   }
 
+  // 회원가입시 입력한 유저정보 저장하기
+  const [userInfo, setUserInfo] = useState([])
+
   //좋아하는 장르 체크 페이지 보이기
   const goCheckBox = (e) => {
     const registerBox = document.querySelector('.Register')
@@ -151,25 +154,59 @@ function Form({type, handleClick, genreLists}){
     console.log('email:', signUpEmail)
     console.log('pw:', signUpPw)
     console.log('pw2:', signUpPw2)
+
+    setUserInfo({
+      userId: signUpId,
+      email: signUpEmail,
+      password: signUpPw
+    })
+    console.log(signUpId, signUpPw, signUpEmail)
     //이메일형식이 올바르지 않거나 비밀번호가 서로 다르면 버튼 비활성화
 
   }
 
+  // 선택한 장르 저장, 사용자가 가입 버튼 클릭했는지 확인
+  const [ userLikeGenres, setUserLikeGenres ] = useState([])
+  const [ isSignup, setIsSignup ] = useState(false)
+
   //회원가입 확인창 보이기
   let arr = []
-  const goresult = () => {
+
+  const goresult = async() => {
     
     const checkBox = document.querySelector('.check-box')
     const doneBox = document.querySelector('.done')
     
-    checkBox.classList.add('goleft3') 
-    doneBox.classList.add('goleft3')
+    // checkBox.classList.add('goleft3') 
+    // doneBox.classList.add('goleft3')
     
     console.log(arr)
     //데이터를 저장해서 좋아하는 장르에 있는 데이터를 fetch해서 메인페이지로 가져와야하나?
     //암튼 여기서 fetch post로 유저 등록
+    const inputs = document.querySelectorAll('.inputs')
+    const userSelectedGenres = []
+    inputs.forEach((input) => {
+      const isChecked = input.firstElementChild.checked
+      const name = input.childNodes[1].innerText
+      // 체크된 장르만 빈 배열에 담기
+      if(isChecked){
+        // console.log(name)
+        userSelectedGenres.push(name)
+      }
+    })
+
+    setIsSignup(true)
+    setUserLikeGenres(userSelectedGenres)
   }
   
+  useEffect(() => {
+    
+    if(isSignup){
+      console.log(userInfo, userLikeGenres)
+    }
+
+  }, [isSignup])
+
   const checkInputs = () => {
     const inputBoxs = document.querySelectorAll('.inputs')
     //장르 체크된것 추출
@@ -177,12 +214,12 @@ function Form({type, handleClick, genreLists}){
     inputBoxs.forEach(inputBox => {
       //체크되어 들어온 장르 미리 배열에 담기
       const isChecked = inputBox.firstElementChild.checked
-      console.log(isChecked)
+      // console.log(isChecked)
       if(isChecked){
         // console.log(inputBox.firstElementChild.value)
         return arr.indexOf(inputBox.firstElementChild.value) == -1 && arr.push(inputBox.firstElementChild.value)
       }else if(!isChecked){
-        console.log(inputBox.firstElementChild.value)
+        // console.log(inputBox.firstElementChild.value)
         return arr.filter((arr) => arr == inputBox.firstElementChild.value)
       }
     })
@@ -191,13 +228,39 @@ function Form({type, handleClick, genreLists}){
     return arr
   }
 
+  const [ loginErrorMsg, setLoginErrorMsg ] = useState("")
+
   //로그인 누르면 홈페이지로 이동
   const navigate = useNavigate()
-  const login = (e) => {
+  const login = async (e) => {
     const loginId = e.target.parentElement.firstElementChild.lastElementChild
-    const loginPw = e.target.parentElement.firstElementChild.nextElementSibling.lastElementChild
+    const loginPw = e.target.parentElement.firstElementChild.nextElementSibling.lastElementChild    
+
     console.log('id:',loginId.value)
     console.log('pw:',loginPw.value)
+
+    const sendLoginInfo = await fetch('http://127.0.0.1:5201/api/users/login', 
+      {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          email: loginId.value,
+          password: loginPw.value
+        })
+      })
+      .then(res => res.json())
+      .then( data => {
+        return data
+      })
+    
+    const loginCode = sendLoginInfo.code
+    if(loginCode === 404){
+      setLoginErrorMsg("존재하지 않는 이메일입니다.")
+    }else if(loginCode === 401){
+      setLoginErrorMsg("비밀번호가 일치하지 않습니다.")
+    }else{
+      setLoginErrorMsg("")
+    }
 
     // navigate('/home')
   }
@@ -238,6 +301,7 @@ function Form({type, handleClick, genreLists}){
           <p className="labelname">비밀번호를 입력하세요</p>
           <input onChange={addClass} type='password' id='loginPw'></input>
         </label>
+        <p className="login-error">{loginErrorMsg}</p>
         <Button btnClass='loginbtn' handleClick={login} disabled={disabled}>로그인</Button>
         <p className="registerbtn" onClick={goSignup}>아직 회원이 아니신가요?</p>
         <p className="registerbtn" onClick={goworldcup}>이상형 월드컵 다시 하러 가기</p>
