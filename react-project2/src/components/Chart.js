@@ -51,7 +51,7 @@ function Chart({ dataArr }){
                 }
             },
             scales: {
-
+                
             }
         }
     }

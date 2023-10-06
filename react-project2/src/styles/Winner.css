@@ -109,6 +109,49 @@
     grid-column: 1 / 4;
     grid-row: 4 / 5;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 2rem;
+}
+.result-container .favorite .favorite-msg{
+    width: auto;
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+.result-container .favorite .favorite-genre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.result-container .favorite .favorite-genre .favorite-point{
+    position: relative;
+    font-size: 3rem;
+    padding: .3rem;
+    margin: 0 2.3rem;
+}
+.result-container .favorite .favorite-genre .favorite-point .crown-icon{
+    position: absolute;
+    top: -32px;
+    left: -28px;
+    transform: rotate(-30deg);
+}
+.result-container .favorite .favorite-genre .favorite-point .favorite-name{
+    border-bottom: 3px solid #ffea8a;
+}
+.result-container .favorite .favorite-genre .favorite-rank{
+    display: flex;
+    align-items: center;
+}
+.result-container .favorite .favorite-genre .favorite-rank > *{
+    margin: 0 1rem;
+}
+.result-container .favorite .favorite-genre .favorite-rank .favorite-percent{
+    width: 15rem;
+    height: 3rem;
+    border: 1px solid #909090;
+    border-radius: .5rem;
+    overflow: hidden;
 }
 
 /* 통계 */
@@ -150,16 +193,19 @@
     border-radius: .3rem;
     overflow: hidden;
 }
-.result-container .stats .genres-rank .rank-info .rank-percent .percent-bar{
+
+.result-container .stats .genres-chart{
+    width: 50%;
+    height: 100%;
+}
+
+/* 퍼센트 바 디자인 */
+.result-container .percent-bar{
     background-color: var(--hover-color);
     height: 100%;
     position: relative;
 }
-.result-container .stats .genres-rank .rank-info .rank-percent .percent-bar span{
+.result-container .percent-bar span{
     position: absolute;
     right: -2.5rem;
-}
-.result-container .stats .genres-chart{
-    width: 50%;
-    height: 100%;
 }

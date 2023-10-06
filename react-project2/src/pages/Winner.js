@@ -12,7 +12,7 @@ import Logo from "../assets/logo.png"
 import { ReactComponent as MedalGold } from "../assets/medal-gold.svg"
 import { ReactComponent as MedalSilver } from "../assets/medal-silver.svg"
 import { ReactComponent as MedalBronze } from "../assets/medal-bronze.svg"
-import { ReactComponent as Crown } from "../assets/royal-crown.svg"
+import { ReactComponent as Crown } from "../assets/crown.svg"
 
 
 function Winner(){
@@ -108,26 +108,49 @@ function Winner(){
                         })}
                     </div>                    
                 </div>
+
                 <div className="move-to-login">
                     <h3 className="mood-join-msg">더 많은 영화를 보고싶다면 <BiRightArrowAlt/></h3>
                     <motion.button className="mood-join-btn" onClick={gohome}>
                         <img src={Logo} alt="logo"/>
                     </motion.button>
                 </div>
+
                 <div className="favorite">
-                    <div className="crown-icon">
-                        <Crown/>
-                    </div>
                     <h2 className="favorite-msg">가장 좋아하는 장르는</h2>
                     <div className="favorite-genre">
-                        <span className="favorite-name">{favoriteGenre.length === 0? "" : `${favoriteGenre[0].name}`}</span>
-                        <div className="favorite-percent">
-                            <div className="percent-bar">
-                                <span className="percent-text"></span>
-                            </div>
+                        <div className="favorite-point">
+                            <div className="crown-icon"><Crown/></div>
+                            <span className="favorite-name">{favoriteGenre.length === 0? "" : `${favoriteGenre[0].name}`}</span> 
                         </div>
+                        {favoriteGenre.length === 0 ? "" :
+                         genresRank.map((genre, index) => {
+                            const total = genresRank[0].likes
+                            const percent = Math.floor((genre.likes / total) * 100)
+                            if(favoriteGenre[0].id === genre.id){
+                                console.log(favoriteGenre, genre)
+                                return (
+                                    <div className="favorite-rank">
+                                        {index === 1 ? <MedalGold/> :
+                                            index === 2 ? <MedalSilver/> :
+                                            index === 3 ? <MedalBronze/> : ""
+                                        }
+                                        <span className="rank-number">{index}위</span>
+                                        <span className="rank-people">{genre.likes} / {total} 명</span>
+                                        <div className="favorite-percent">
+                                            <div className="percent-bar" style={{width: `${percent}%`}}>
+                                                <span className="percent-text">{percent}%</span>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                )
+                            }
+                            
+                        })}
                     </div>
                 </div>
+
                 <div className="stats">
                     <div className="genres-rank">
                         {genresRank.map((genre, index) => {
@@ -145,7 +168,8 @@ function Winner(){
                                         <span className="rank-name">{genre.name}</span>
                                         <div className="rank-percent">
                                             <div className="percent-bar" style={{width: `${percent}%`}}>
-                                                <span className="percent-text">{percent}%</span></div>    
+                                                <span className="percent-text">{percent}%</span>
+                                            </div>    
                                         </div>
                                     </div>
                                 )
