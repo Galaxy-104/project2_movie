@@ -9,6 +9,8 @@ import Genres from '../api/Genres.json'
 function Form({type, handleClick, genreLists}){
 
   const [disabled, setDisabled] = useState(true)
+  const [checked, setChecked] = useState(genreLists)
+  const [userInfo, setuserInfo] = useState({})
 
   //인풋꾸미기에서 인풋기능들이 추가되버린..
   const addClass = (e) => {
@@ -135,9 +137,6 @@ function Form({type, handleClick, genreLists}){
     
   }
 
-  // 회원가입시 입력한 유저정보 저장하기
-  const [userInfo, setUserInfo] = useState([])
-
   //좋아하는 장르 체크 페이지 보이기
   const goCheckBox = (e) => {
     const registerBox = document.querySelector('.Register')
@@ -155,14 +154,13 @@ function Form({type, handleClick, genreLists}){
     console.log('pw:', signUpPw)
     console.log('pw2:', signUpPw2)
 
-    setUserInfo({
-      userId: signUpId,
-      email: signUpEmail,
-      password: signUpPw
+    setDisabled(false)
+    setuserInfo({
+      userid : signUpId,
+      userEmail : signUpEmail,
+      userpw : signUpPw
     })
-    console.log(signUpId, signUpPw, signUpEmail)
-    //이메일형식이 올바르지 않거나 비밀번호가 서로 다르면 버튼 비활성화
-
+    return userInfo, console.log(userInfo)
   }
 
   // 선택한 장르 저장, 사용자가 가입 버튼 클릭했는지 확인
@@ -171,8 +169,8 @@ function Form({type, handleClick, genreLists}){
 
   //회원가입 확인창 보이기
   let arr = []
-
-  const goresult = async() => {
+  
+  const goresult = () => {
     
     const checkBox = document.querySelector('.check-box')
     const doneBox = document.querySelector('.done')
@@ -180,34 +178,17 @@ function Form({type, handleClick, genreLists}){
     // checkBox.classList.add('goleft3') 
     // doneBox.classList.add('goleft3')
     
-    console.log(arr)
+    console.log(checked)
+    console.log(userInfo)
     //데이터를 저장해서 좋아하는 장르에 있는 데이터를 fetch해서 메인페이지로 가져와야하나?
+    //ㄴ이렇게해야 회원가입안거치고 바로 로그인했을때 장르연동됨
     //암튼 여기서 fetch post로 유저 등록
-    const inputs = document.querySelectorAll('.inputs')
-    const userSelectedGenres = []
-    inputs.forEach((input) => {
-      const isChecked = input.firstElementChild.checked
-      const name = input.childNodes[1].innerText
-      // 체크된 장르만 빈 배열에 담기
-      if(isChecked){
-        // console.log(name)
-        userSelectedGenres.push(name)
-      }
-    })
-
-    setIsSignup(true)
-    setUserLikeGenres(userSelectedGenres)
   }
   
-  useEffect(() => {
-    
-    if(isSignup){
-      console.log(userInfo, userLikeGenres)
-    }
-
-  }, [isSignup])
-
+  //자동체크된것 바로 버튼활성화 안되는것 해결하기
+  //로그아웃후 새로 내가 클릭해서 담은 장르들은 연동안됨
   const checkInputs = () => {
+    console.log(userInfo)
     const inputBoxs = document.querySelectorAll('.inputs')
     //장르 체크된것 추출
     
@@ -216,17 +197,26 @@ function Form({type, handleClick, genreLists}){
       const isChecked = inputBox.firstElementChild.checked
       // console.log(isChecked)
       if(isChecked){
-        // console.log(inputBox.firstElementChild.value)
-        return arr.indexOf(inputBox.firstElementChild.value) == -1 && arr.push(inputBox.firstElementChild.value)
-      }else if(!isChecked){
-        // console.log(inputBox.firstElementChild.value)
-        return arr.filter((arr) => arr == inputBox.firstElementChild.value)
+        console.log(inputBox.firstElementChild.value)
+        arr.indexOf(inputBox.firstElementChild.value) == -1 && arr.push(inputBox.firstElementChild.value)
+        console.log(arr)
+        return setChecked(arr)
       }
+      // console.log(checked)
+      arr.length > 2 ? setDisabled(false) : setDisabled(true)
     })
-    console.log(arr)
-    arr.length > 2 ? setDisabled(false) : setDisabled(true)
-    return arr
+    return checked
   }
+  console.log(checked)
+  console.log(userInfo)
+  // useEffect(() => {
+  //   const signupOKBtn = document.querySelector('.signupOK')
+  //   checked && checked.length > 2 ? signupOKBtn.disabled = false : signupOKBtn.disabled = true
+  //   console.log('버튼 활성화:',signupOKBtn.disabled)
+  //   console.log('체크:',checked)
+  //   console.log('버튼비활성화state:',disabled)
+  //   console.log('장르3개이상:',checked && checked.length > 2)
+  // },[])
 
   const [ loginErrorMsg, setLoginErrorMsg ] = useState("")
 
@@ -239,30 +229,7 @@ function Form({type, handleClick, genreLists}){
     console.log('id:',loginId.value)
     console.log('pw:',loginPw.value)
 
-    const sendLoginInfo = await fetch('http://127.0.0.1:5201/api/users/login', 
-      {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({
-          email: loginId.value,
-          password: loginPw.value
-        })
-      })
-      .then(res => res.json())
-      .then( data => {
-        return data
-      })
-    
-    const loginCode = sendLoginInfo.code
-    if(loginCode === 404){
-      setLoginErrorMsg("존재하지 않는 이메일입니다.")
-    }else if(loginCode === 401){
-      setLoginErrorMsg("비밀번호가 일치하지 않습니다.")
-    }else{
-      setLoginErrorMsg("")
-    }
-
-    // navigate('/home')
+    navigate('/home',{state:{checked}})
   }
 
   
@@ -289,8 +256,9 @@ function Form({type, handleClick, genreLists}){
   const goworldcup = () => {
     navigate('/')
   }
+
   //회원가입시 이미 존재하는 이메일이면 input창 벗어났을때 바로 알려주기  
-  if(type == 'login'){
+  if(type == 'login'){ //로그인 폼
     return(
       <div className="Login base">
         <label htmlFor='loginEmail'>
@@ -307,8 +275,9 @@ function Form({type, handleClick, genreLists}){
         <p className="registerbtn" onClick={goworldcup}>이상형 월드컵 다시 하러 가기</p>
       </div>
     )
-  }else if(type == 'signup'){
+  }else if(type == 'signup'){ //회원가입 폼
     return(
+      <>
       <div className="Register base">
         <h3>계정 만들기</h3>
         <label htmlFor='userId'>
@@ -329,27 +298,26 @@ function Form({type, handleClick, genreLists}){
         </label>
         <Button btnClass='loginbtn' handleClick={goCheckBox} disabled={disabled}>다음</Button>
       </div>
-    )
-  }else if(type == 'checkBox'){
-    // console.log(Genres)
-    return(
+
+      {/* 장르 고르기 폼 */}
       <div className="check-box base">
-        <h4>좋아하는 장르를 3개 이상 선택해주세요!</h4>
-          <div className="input-box">
-            {Genres.genres.map((genre,id) => {
-              // console.log(genre)
-              return(
-                <div className="inputs" key={id}>
-                  <input type='checkbox' name='genre' id={genre.name} value={genre.name} onClick={checkInputs} defaultChecked={genreLists && genreLists.includes(genre.id) && 'on'}/>
-                  <label htmlFor={genre.name}>{genre.name}</label>
-                </div>
-              )
-            })}
-          </div>
-          <Button btnClass='signupOK' handleClick={goresult} disabled={disabled}>가입완료하기</Button>
+      <h4>좋아하는 장르를 3개 이상 선택해주세요!</h4>
+        <div className="input-box">
+          {Genres.genres.map((genre,id) => {
+            // console.log(genre)
+            return(
+              <div className="inputs" key={id}>
+                <input type='checkbox' name='genre' id={genre.name} value={genre.id} onClick={checkInputs} defaultChecked={genreLists && genreLists.includes(genre.id) && 'on'}/>
+                <label htmlFor={genre.name}>{genre.name}</label>
+              </div>
+            )
+          })}
         </div>
+        <Button btnClass='signupOK' handleClick={goresult} disabled={disabled}>가입완료하기</Button>
+      </div>
+      </>
     )
-  }else if(type == 'done'){
+  }else if(type == 'done'){ //회원가입 완료 폼
     //백앤드 결과화면으로 회원가입 성공여부 띄워주기
     return(
       <div className="done base">
