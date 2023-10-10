@@ -1,6 +1,6 @@
 import React, { Component,useState } from "react";
 import Button from "./Button";
-// import YouTube from 'react-youtube'
+import YouTube from 'react-youtube'
 import '../styles/Modal.css'
 import Genres from '../api/Genres.json'
 
@@ -69,9 +69,10 @@ function Modal ({children, open, type, close, pickMovie }){
                     {/* <h4>평점: {pickMovie.rating}</h4> */}
                     <p className="modalP normalP" onClick={openP}>{pickMovie.overview ? pickMovie.overview : '줄거리가 없습니다.'}</p>
                     
-                  </div>
-                  {/* <YouTube className='youtube' 
-                    videoId={pickMovie.yt_trailer_code} 
+                  </div>  
+                  {pickMovie.video_path.length !== 0 &&
+                    <YouTube className='youtube' 
+                    videoId={pickMovie.video_path[0].key} 
                     opts={{
                     width: '100%',
                     playerVars: {
@@ -82,7 +83,8 @@ function Modal ({children, open, type, close, pickMovie }){
                     controls:0, //동영상컨트롤 표시 x
                     modestbranding: 1,
                     //안먹히는기분
-                  },}} onReady={(e)=> {e.target.mute()}} /> */}
+                  },}} onReady={(e)=> {e.target.mute()}} />
+                  }
                 </div>
                 <Button btnClass='closeBtn' handleClick={close}>x</Button>
             </>  

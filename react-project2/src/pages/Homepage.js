@@ -41,7 +41,8 @@ function Homepage(){
     const location = useLocation()
     console.log(location)
     //1등영화의 장르가 들어올 배열
-    const userPickLists = location.state.checked
+    const userPickLists = [80, 14, 18]
+    // location.state.checked
     
     const winnerGenres = []
 
