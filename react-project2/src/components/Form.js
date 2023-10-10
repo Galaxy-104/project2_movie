@@ -10,7 +10,7 @@ function Form({type, handleClick, genreLists}){
 
   const [disabled, setDisabled] = useState(true)
   const [checked, setChecked] = useState(genreLists)
-  const [userInfo, setuserInfo] = useState({})
+  
 
   //인풋꾸미기에서 인풋기능들이 추가되버린..
   const addClass = (e) => {
@@ -155,13 +155,15 @@ function Form({type, handleClick, genreLists}){
     console.log('pw2:', signUpPw2)
 
     setDisabled(false)
-    setuserInfo({
+    setUserInfo({
       userid : signUpId,
       userEmail : signUpEmail,
       userpw : signUpPw
     })
     return userInfo, console.log(userInfo)
   }
+
+  const [userInfo, setUserInfo] = useState({})
 
   //회원가입 확인창 보이기
   let arr = []
@@ -171,14 +173,32 @@ function Form({type, handleClick, genreLists}){
     const checkBox = document.querySelector('.check-box')
     const doneBox = document.querySelector('.done')
     
-    checkBox.classList.add('goleft3') 
-    doneBox.classList.add('goleft3')
+    
     
     console.log(checked)
     console.log(userInfo)
     //데이터를 저장해서 좋아하는 장르에 있는 데이터를 fetch해서 메인페이지로 가져와야하나?
     //ㄴ이렇게해야 회원가입안거치고 바로 로그인했을때 장르연동됨
     //암튼 여기서 fetch post로 유저 등록
+    fetch('http://127.0.0.1:5201/api/users/signup', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+          userId: userInfo.userid,
+          email: userInfo.userEmail,
+          password: userInfo.userpw,
+          likeGenre: [...checked]
+      })
+    })
+    .then( res => res.json() )
+    .then( result => {
+      console.log(result)
+      if(result.code === 200){
+        checkBox.classList.add('goleft3') 
+        doneBox.classList.add('goleft3')
+      }
+    })
+
   }
   
   //자동체크된것 바로 버튼활성화 안되는것 해결하기
@@ -191,7 +211,7 @@ function Form({type, handleClick, genreLists}){
     inputBoxs.forEach(inputBox => {
       //체크되어 들어온 장르 미리 배열에 담기
       const isChecked = inputBox.firstElementChild.checked
-      console.log(isChecked)
+      // console.log(isChecked)
       if(isChecked){
         console.log(inputBox.firstElementChild.value)
         arr.indexOf(inputBox.firstElementChild.value) == -1 && arr.push(inputBox.firstElementChild.value)
@@ -214,11 +234,14 @@ function Form({type, handleClick, genreLists}){
   //   console.log('장르3개이상:',checked && checked.length > 2)
   // },[])
 
+  const [ loginErrorMsg, setLoginErrorMsg ] = useState("")
+
   //로그인 누르면 홈페이지로 이동
   const navigate = useNavigate()
-  const login = (e) => {
+  const login = async (e) => {
     const loginId = e.target.parentElement.firstElementChild.lastElementChild
-    const loginPw = e.target.parentElement.firstElementChild.nextElementSibling.lastElementChild
+    const loginPw = e.target.parentElement.firstElementChild.nextElementSibling.lastElementChild    
+
     console.log('id:',loginId.value)
     console.log('pw:',loginPw.value)
 
@@ -262,6 +285,7 @@ function Form({type, handleClick, genreLists}){
           <p className="labelname">비밀번호를 입력하세요</p>
           <input onChange={addClass} type='password' id='loginPw'></input>
         </label>
+        <p className="login-error">{loginErrorMsg}</p>
         <Button btnClass='loginbtn' handleClick={login} disabled={disabled}>로그인</Button>
         <p className="registerbtn" onClick={goSignup}>아직 회원이 아니신가요?</p>
         <p className="registerbtn" onClick={goworldcup}>이상형 월드컵 다시 하러 가기</p>

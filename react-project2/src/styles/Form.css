@@ -91,3 +91,9 @@ label{
 .errorfont{
   color: var(--main-color);
 }
+
+.login-error{
+  padding: 0;
+  margin: 0;
+  color: var(--main-color);
+}
