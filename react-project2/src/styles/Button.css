@@ -60,4 +60,13 @@
 
 .signupOK{
   margin-bottom: 3rem;
+  margin-left: 1rem;
+}
+
+
+/* 버튼 비활성화 */
+.disabled{
+  background-color: var(--hover-color);
+  text-decoration: line-through;
+  cursor: auto;
 }

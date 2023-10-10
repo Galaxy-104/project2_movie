@@ -6,6 +6,7 @@ const app = express()
 
 
 const moviesRouter = require('./src/routes/movies')
+const user = require('./src/routes/users')
 const ResultRouter = require('./src/routes/results')
 
 
@@ -31,6 +32,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 app.use('/api/moviesdata', moviesRouter)
+app.use('/api/users', user)
 app.use('/api/result', ResultRouter)
 
 

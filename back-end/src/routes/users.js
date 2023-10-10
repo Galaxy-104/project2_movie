@@ -56,4 +56,18 @@ router.post('/logout', expressAsyncHandler(async (req, res, next) => {
   console.log(req.body)
   res.json({code:200, message: '로그아웃하였습니다.'})
 }))
+
+//전체 유저 조회
+router.get('/', expressAsyncHandler(async (req, res, next) => {
+  const user = await User.find({})
+  if(user.length === 0){
+    res.status(404).json({code: 404, message: '사용자가 없습니다.'})
+  }else{
+    res.json({code: 200, user})
+  }
+}))
+
+
+
+
 module.exports = router

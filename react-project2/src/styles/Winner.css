@@ -10,10 +10,6 @@
     position: relative;
 }
 
-.result-container > div{
-    border: 1px solid #909090;
-}
-
 /* 이상형 월드컵 1등 영화 */
 .result-container .poster{
     grid-column: 1 / 2;
@@ -22,6 +18,13 @@
     justify-content: center;
     align-items: center;
     align-self: flex-end;
+    position: relative;
+}
+.result-container .poster .champion{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 2.5rem;
 }
 .result-container .poster .player{
     box-shadow: none;
@@ -85,17 +88,19 @@
 }
 .result-container .move-to-login .mood-join-msg{
     text-align: right;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     margin: 0;
     letter-spacing: 1px;
     text-shadow: none;
+    color: rgba(255, 255, 255, 0.6);
 }
 .result-container .move-to-login .mood-join-btn{
     background: none;
-    width: 20rem;
-    height: 5rem;
+    width: 16rem;
+    height: 4rem;
     transition: .5s;
     border: none;
+    cursor: pointer;
 }
 .result-container .move-to-login .mood-join-btn img{
     width: 100%;
@@ -103,10 +108,60 @@
     object-fit: fill;
     object-position: center;
 }
+
+/* 가장 좋아하는 장르 */
 .result-container .favorite{
     grid-column: 1 / 4;
     grid-row: 4 / 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 2rem;
 }
+.result-container .favorite .favorite-msg{
+    width: auto;
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+.result-container .favorite .favorite-genre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.result-container .favorite .favorite-genre .favorite-point{
+    position: relative;
+    font-size: 3rem;
+    padding: .3rem;
+    margin: 0 2.3rem;
+}
+.result-container .favorite .favorite-genre .favorite-point .crown-icon{
+    position: absolute;
+    top: -32px;
+    left: -28px;
+    transform: rotate(-30deg);
+}
+.result-container .favorite .favorite-genre .favorite-point .favorite-name{
+    border-bottom: 3px solid #ffea8a;
+}
+.result-container .favorite .favorite-genre .favorite-rank{
+    display: flex;
+    align-items: center;
+}
+.result-container .favorite .favorite-genre .favorite-rank > *{
+    margin: 0 1rem;
+}
+.result-container .favorite .favorite-genre .favorite-rank .favorite-percent{
+    width: 15rem;
+    height: 3rem;
+    border: 1px solid #909090;
+    border-radius: .5rem;
+    overflow: hidden;
+}
+.result-container .favorite .favorite-genre .favorite-rank .favorite-percent .percent-text{
+    right: -3.8rem;
+}
+
 /* 통계 */
 .result-container .stats{
     grid-column: 1 / 4;
@@ -116,16 +171,16 @@
     align-items: center; 
 }
 .result-container .stats .genres-rank{
-    width: 50%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    margin-right: 2rem;
 }
 .result-container .stats .genres-rank .rank-info{
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin: .5rem 0;
 }
 .result-container .stats .genres-rank .rank-info > span{
     margin-right: 1rem;
@@ -146,16 +201,19 @@
     border-radius: .3rem;
     overflow: hidden;
 }
-.result-container .stats .genres-rank .rank-info .rank-percent .percent-bar{
+
+.result-container .stats .genres-chart{
+    width: 50%;
+    height: 100%;
+}
+
+/* 퍼센트 바 디자인 */
+.result-container .percent-bar{
     background-color: var(--hover-color);
     height: 100%;
     position: relative;
 }
-.result-container .stats .genres-rank .rank-info .rank-percent .percent-bar span{
+.result-container .percent-bar span{
     position: absolute;
     right: -2.5rem;
-}
-.result-container .stats .genres-chart{
-    width: 50%;
-    height: 100%;
 }

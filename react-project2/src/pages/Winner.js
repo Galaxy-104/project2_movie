@@ -4,14 +4,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { BiRightArrowAlt } from "react-icons/bi"
 import { motion } from "framer-motion"
 
-import Chart from "../components/Chart";
-import WinnerPlayer from "../components/winnerPlayer"
+import GenreChart from "../components/GenreChart";
+import WinnerPlayer from "../components/WinnerPlayer"
 
 import '../styles/Winner.css'
 import Logo from "../assets/logo.png"
 import { ReactComponent as MedalGold } from "../assets/medal-gold.svg"
 import { ReactComponent as MedalSilver } from "../assets/medal-silver.svg"
 import { ReactComponent as MedalBronze } from "../assets/medal-bronze.svg"
+import { ReactComponent as Crown } from "../assets/crown.svg"
+import { ReactComponent as Point } from "../assets/point.svg"
+
 
 
 function Winner(){
@@ -22,12 +25,14 @@ function Winner(){
         navigate('/login', {state: {genres: winner[0].genre_ids}})
         // navigate('/home', {state: {genres: winner[0].genre_ids}})
     }
-    const [recommendMovies, setRecommendMovies] = useState([])
-    const [genreData, setGenreData] = useState([])
-    const [genresRank, setGenresRank] = useState([])
+    const [ recommendMovies, setRecommendMovies ] = useState([])
+    const [ genreData, setGenreData ] = useState([])
+    const [ genresRank, setGenresRank ] = useState([])
+
+    const [ favoriteGenre, setFavoriteGenre ] = useState([])
 
     useEffect(() => {
-        const getFavoriteGenreMovies = async () => {
+        const getFavoriteGenreMovies = async (win) => {
 
             const data = await fetch('/api/Tournament.json')
             const res = await data.json()
@@ -38,12 +43,12 @@ function Winner(){
             const recommendGenres = []
 
             const findMovies = () => {
-                console.log(winnerMoviesGenre)
                 const filterMovies = [...winnerMoviesGenre]
                 const indices = []
+
                 while(indices.length < 3){
                     let index = Math.floor(Math.random() * filterMovies[0].movies.length)
-                    if(!indices.includes(index)){
+                    if(!indices.includes(index) && win.id !== filterMovies[0].movies[index].id){
                         indices.push(index)
                     }
                 }
@@ -63,13 +68,27 @@ function Winner(){
             })
             .then(res => res.json())
             .then((data) => {
+                console.log(data)
                 setGenreData([...data.results])
                 setGenresRank([...data.results.sort((a, b) => b.likes - a.likes)]) 
                 
-            })            
+            })   
         }
-        getFavoriteGenreMovies()
+        getFavoriteGenreMovies(winner[0])
     }, [])
+
+    useEffect(() => {
+        if(genreData.length !== 0){
+        //    console.log(genreData, winnerMoviesGenre)
+           const favorite = genreData.filter((genre) => {
+                    return genre.id === winnerMoviesGenre[0].code
+                })
+           setFavoriteGenre([...favorite])
+           console.log(favorite[0].name)
+            
+        }
+    }, [genreData])
+
 
     return (
         <div className="winner-page">
@@ -80,7 +99,7 @@ function Winner(){
 
                 <div className="recommend">
                     <div className="recommend-header">
-                        <h2>추천 영화</h2>
+                        <h2>이런 영화는 어떠세요?</h2>
                     </div>
 
                     <div className="recommend-movies">
@@ -93,16 +112,49 @@ function Winner(){
                         })}
                     </div>                    
                 </div>
+
                 <div className="move-to-login">
                     <h3 className="mood-join-msg">더 많은 영화를 보고싶다면 <BiRightArrowAlt/></h3>
                     <motion.button className="mood-join-btn" onClick={gohome}>
                         <img src={Logo} alt="logo"/>
                     </motion.button>
                 </div>
+
                 <div className="favorite">
-                    <h2 className="favorite-msg"></h2>
-                    <div className="favorite-genre"></div>
+                    <h2 className="favorite-msg">가장 좋아하는 장르는</h2>
+                    <div className="favorite-genre">
+                        <div className="favorite-point">
+                            <div className="crown-icon"><Crown/></div>
+                            <span className="favorite-name">{favoriteGenre.length === 0? "" : `${favoriteGenre[0].name}`}</span> 
+                        </div>
+                        {favoriteGenre.length === 0 ? "" :
+                         genresRank.map((genre, index) => {
+                            const total = genresRank[0].likes
+                            const percent = Math.floor((genre.likes / total) * 100)
+                            if(favoriteGenre[0].id === genre.id){
+                                console.log(favoriteGenre, genre)
+                                return (
+                                    <div className="favorite-rank" key={`winner-${genre.name}`}>
+                                        {index === 1 ? <MedalGold/> :
+                                            index === 2 ? <MedalSilver/> :
+                                            index === 3 ? <MedalBronze/> : ""
+                                        }
+                                        <span className="rank-number">{index}위</span>
+                                        <span className="rank-people">{genre.likes} / {total} 명</span>
+                                        <div className="favorite-percent">
+                                            <div className="percent-bar" style={{width: `${percent}%`}}>
+                                                <span className="percent-text">{percent}%</span>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                )
+                            }
+                            
+                        })}
+                    </div>
                 </div>
+
                 <div className="stats">
                     <div className="genres-rank">
                         {genresRank.map((genre, index) => {
@@ -120,7 +172,8 @@ function Winner(){
                                         <span className="rank-name">{genre.name}</span>
                                         <div className="rank-percent">
                                             <div className="percent-bar" style={{width: `${percent}%`}}>
-                                                <span className="percent-text">{percent}%</span></div>    
+                                                <span className="percent-text">{percent}%</span>
+                                            </div>    
                                         </div>
                                     </div>
                                 )
@@ -128,7 +181,8 @@ function Winner(){
                         })}
                     </div>
                     <div className="genres-chart">
-                        {genreData.length === 0? "" : <Chart dataArr={genreData}/>}   
+                        {/* <Chart dataArr={genreData}/> */}
+                        {genreData.length === 0? "" : <GenreChart dataArr={genreData}/>}   
                     </div>
                 </div>
             </div>
