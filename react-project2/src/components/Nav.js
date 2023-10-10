@@ -12,6 +12,11 @@ function Nav(){
     navigate('/home')
   }
 
+  // 내 정보 클릭
+  const account = () => {
+    navigate('/account')
+  }
+
   //로그아웃 클릭
   const logout = () => {
     navigate('/login', {state:{genres:[]}})
@@ -25,6 +30,7 @@ function Nav(){
     <div className={`Nav`}>
     <img src={logo} onClick={toHome}></img>
     <div className="btn-box">
+      <Button>내 정보</Button>
       <Button handleClick={toLike}>즐겨찾기</Button>
       <Button handleClick={logout}>로그아웃</Button>
     </div>

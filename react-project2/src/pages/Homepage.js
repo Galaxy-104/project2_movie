@@ -38,10 +38,26 @@ function Homepage(){
         setMovies(movies)
       })
     },[])
+
+    useEffect(() => {
+      fetch('http://localhost:5201/api/users/check',
+      {
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+      })
+      .then( res => res.json() )
+      .then( result => {
+        console.log(result)
+      })
+    }, [])
+
     const location = useLocation()
     console.log(location)
     //1등영화의 장르가 들어올 배열
-    const userPickLists = location.state.checked
+    const userPickLists = []
+    // location.state.checked
     
     const winnerGenres = []
 

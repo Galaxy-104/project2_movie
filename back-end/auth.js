@@ -20,11 +20,11 @@ const makeToken = (user) => {
 
 //사용자 권한 검증
 const isAuth = (req, res, next) => {
-  const bearToken = req.headers.authorization
-  if(!bearToken){
+  const cookieToken = req.headers.cookie
+  if(!cookieToken){
     res.status(401).json({code: 401, message: '토큰이 유효하지 않습니다.'})
   }else{
-    const token = bearToken.slice(7, bearToken.length)
+    const token = cookieToken.slice(6, cookieToken.length)
 
     jwt.verify(token, config.JWT_SECRET, (err, userInfo) => {
       if(err && err.name === 'TokenExpiredError'){
