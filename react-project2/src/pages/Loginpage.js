@@ -13,7 +13,7 @@ function Loginpage(){
     const introText2 = document.querySelector('.introText2')
     const introText3 = document.querySelector('.introText3')
     const downBtn = document.querySelector('.downbtn')
-    setTimeout(()=>img.classList.add('imgdown'), 1000)
+    setTimeout(() => img.classList.add('imgdown'), 1000)
     setTimeout(() => introtext1.classList.add('introText1-right'),1500)
     setTimeout(() => introText2.classList.add('introText2-left'),2000)
     setTimeout(() => {
@@ -52,8 +52,8 @@ function Loginpage(){
       <Button btnClass='downbtn' handleClick={gofrom}>↓</Button>
       <div className="form">
         <Form type='login'></Form>
-        <Form type='signup'></Form>
-        <Form type='checkBox' genreLists={genreLists}></Form>
+        <Form type='signup' genreLists={genreLists}></Form>
+        {/* <Form type='checkBox' genreLists={genreLists}></Form> */}
         <Form type='done'></Form>
       </div>
     </div>
