@@ -38,7 +38,10 @@ function Form({type, handleClick, genreLists}){
 
           const loginPw = document.getElementById('loginPw')
           loginPw.value !== '' ? setDisabled(false) : setDisabled(true)
+<<<<<<< HEAD
           
+=======
+>>>>>>> 2932a836ff93b43bf48880c1c4ac8e0724261d8f
         }
       }else if(e.target.id === 'loginPw'){
         const loginEmail = e.target.parentElement.previousElementSibling.lastElementChild
@@ -218,7 +221,11 @@ function Form({type, handleClick, genreLists}){
           userId: userInfo.userid,
           email: userInfo.userEmail,
           password: userInfo.userpw,
+<<<<<<< HEAD
           likeGenre: checked
+=======
+          likeGenre: [...checked]
+>>>>>>> 2932a836ff93b43bf48880c1c4ac8e0724261d8f
       })
     })
     .then( res => res.json() )
@@ -256,6 +263,7 @@ function Form({type, handleClick, genreLists}){
   }
   console.log(checked)
   console.log(userInfo)
+<<<<<<< HEAD
 
   //장르선택창에서 회원가입창으로 되돌아가기
   const backSingup = () => {
@@ -278,6 +286,16 @@ function Form({type, handleClick, genreLists}){
 
     
   },)
+=======
+  // useEffect(() => {
+  //   const signupOKBtn = document.querySelector('.signupOK')
+  //   checked && checked.length > 2 ? signupOKBtn.disabled = false : signupOKBtn.disabled = true
+  //   console.log('버튼 활성화:',signupOKBtn.disabled)
+  //   console.log('체크:',checked)
+  //   console.log('버튼비활성화state:',disabled)
+  //   console.log('장르3개이상:',checked && checked.length > 2)
+  // },[])
+>>>>>>> 2932a836ff93b43bf48880c1c4ac8e0724261d8f
 
   const [ loginErrorMsg, setLoginErrorMsg ] = useState("")
 
@@ -286,11 +304,19 @@ function Form({type, handleClick, genreLists}){
   const login = async (e) => {
     const loginId = e.target.parentElement.firstElementChild.lastElementChild
     const loginPw = e.target.parentElement.firstElementChild.nextElementSibling.lastElementChild    
+<<<<<<< HEAD
 
     console.log('id:',loginId.value)
     console.log('pw:',loginPw.value)
 
     navigate('/home')
+=======
+
+    console.log('id:',loginId.value)
+    console.log('pw:',loginPw.value)
+
+    navigate('/home',{state:{checked}})
+>>>>>>> 2932a836ff93b43bf48880c1c4ac8e0724261d8f
   }
 
   
@@ -374,7 +400,10 @@ function Form({type, handleClick, genreLists}){
             )
           })}
         </div>
+<<<<<<< HEAD
         <Button btnClass='backSingup' handleClick={backSingup}>이전화면보기</Button>
+=======
+>>>>>>> 2932a836ff93b43bf48880c1c4ac8e0724261d8f
         <Button btnClass='signupOK' handleClick={goresult} disabled={disabled}>가입완료하기</Button>
       </div>
       </>

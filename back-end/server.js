@@ -8,6 +8,7 @@ const app = express()
 const moviesRouter = require('./src/routes/movies')
 const user = require('./src/routes/users')
 const ResultRouter = require('./src/routes/results')
+const usersRouter = require('./src/routes/users')
 
 
 
@@ -34,6 +35,7 @@ app.use(express.urlencoded({extended: true}))
 app.use('/api/moviesdata', moviesRouter)
 app.use('/api/users', user)
 app.use('/api/result', ResultRouter)
+app.use('/api/users', usersRouter)
 
 
 app.listen(5201, () => {

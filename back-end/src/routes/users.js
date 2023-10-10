@@ -34,12 +34,15 @@ router.post('/signup', expressAsyncHandler(async (req, res, next) => {
 //로그인
 router.post('/login', expressAsyncHandler(async (req, res, next) => {
   console.log(req.body)
+  const loginEmail = await User.findOne({ email: req.body.email })
   const loginUser = await User.findOne({
     email: req.body.email,
     password: req.body.password,
   })
-  if(!loginUser){
-    res.status(401).json({code: 401, message: 'email이나 비밀번호를 확인해주세요.'})
+  if(!loginEmail){
+    res.status(404).json({code: 404, message: '존재하지 않는 회원입니다.'})
+  }else if(!loginUser){
+    res.status(401).json({code: 401, message: '비밀번호가 일치하지 않습니다.'})
   }else{
     const { userId, email, isAdmin, likeGenre } = loginUser
     res.json({
@@ -57,6 +60,7 @@ router.post('/logout', expressAsyncHandler(async (req, res, next) => {
   res.json({code:200, message: '로그아웃하였습니다.'})
 }))
 
+<<<<<<< HEAD
 //전체 유저 조회
 router.get('/', expressAsyncHandler(async (req, res, next) => {
   const user = await User.find({})
@@ -70,4 +74,6 @@ router.get('/', expressAsyncHandler(async (req, res, next) => {
 
 
 
+=======
+>>>>>>> 2932a836ff93b43bf48880c1c4ac8e0724261d8f
 module.exports = router

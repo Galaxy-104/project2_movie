@@ -6,13 +6,20 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+<<<<<<< HEAD
     "chart": "^0.1.2",
+=======
+    "apexcharts": "^3.43.0",
+>>>>>>> 2932a836ff93b43bf48880c1c4ac8e0724261d8f
     "chart.js": "^4.4.0",
     "chartjs-plugin-datalabels": "^2.2.0",
     "framer-motion": "^10.16.4",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
+<<<<<<< HEAD
     "react-chartjs-2": "^5.2.0",
+=======
+>>>>>>> 2932a836ff93b43bf48880c1c4ac8e0724261d8f
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-intersection-observer": "^9.5.2",
