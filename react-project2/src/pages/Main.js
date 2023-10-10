@@ -19,58 +19,6 @@ function Main(){
          }
     };
 
-    // 비디오 링크 삽입 위한 코드 (완료시 삭제)
-    useEffect(() => {
-        async function fectchMoive(){
-            const movieData = await fetch('/api/Movies.json')
-                .then( res => res.json() )
-                .then( data => { return data })
-
-                // 6469 번까지 완료
-            // let index = 6470
-            // const sendVideodata = async () => {
-            //     const videoData = await fetch(`https://api.themoviedb.org/3/movie/${movieData[index].id}/videos?api_key=63c4822f4d457602ab46709c2dfab05d`)
-            //     .then( res => res.json() )
-            //     .then( data => { return data.results })
-
-            //     const filterKey = videoData.filter((key) => {
-            //         if(key.site === "YouTube" && key.name.includes("Official") && key.name.includes("Trailer")){
-            //             return key
-            //         }
-            //     })
-            //     console.log(filterKey)
-
-            //     if(filterKey){
-            //         fetch(`http://127.0.0.1:5201/api/moviesdata/video`,
-            //         {
-            //             method: 'PUT',
-            //             headers: {'Content-Type':'application/json'},
-            //             body: JSON.stringify({
-            //                 id: movieData[index].id,
-            //                 video_path: filterKey
-            //             })
-            //         })
-            //     }
-            //     // const sendData = await fetch(`http://127.0.0.1:5201/api/result`,
-            //     // {
-            //     //     method: 'POST',
-            //     //     headers: {'Content-Type':'application/json'},
-            //     //     body: JSON.stringify({
-                        
-            //     //     })
-            //     // })
-                
-            //     index++
-            //     console.log(videoData, index)
-            // } 
-            // setInterval(sendVideodata, 500)
-            // if(index > movieData.length){
-            //     clearInterval(sendVideodata())
-            // }
-        }
-        fectchMoive()
-    }, [])
-
     // 자식인 motion.text 태그 애니메이션
     // 부모와 자식에 동일한 이름의 애니메이션이 적용되어야
     // children 속성이 적용 가능 

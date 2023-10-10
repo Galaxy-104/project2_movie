@@ -10,7 +10,7 @@ function Form({type, handleClick, genreLists}){
 
   const [disabled, setDisabled] = useState(true)
   const [checked, setChecked] = useState(genreLists)
-  const [userInfo, setuserInfo] = useState({})
+  
 
   //인풋꾸미기에서 인풋기능들이 추가되버린..
   const addClass = (e) => {
@@ -155,7 +155,7 @@ function Form({type, handleClick, genreLists}){
     console.log('pw2:', signUpPw2)
 
     setDisabled(false)
-    setuserInfo({
+    setUserInfo({
       userid : signUpId,
       userEmail : signUpEmail,
       userpw : signUpPw
@@ -163,9 +163,7 @@ function Form({type, handleClick, genreLists}){
     return userInfo, console.log(userInfo)
   }
 
-  // 선택한 장르 저장, 사용자가 가입 버튼 클릭했는지 확인
-  const [ userLikeGenres, setUserLikeGenres ] = useState([])
-  const [ isSignup, setIsSignup ] = useState(false)
+  const [userInfo, setUserInfo] = useState({})
 
   //회원가입 확인창 보이기
   let arr = []
@@ -175,14 +173,32 @@ function Form({type, handleClick, genreLists}){
     const checkBox = document.querySelector('.check-box')
     const doneBox = document.querySelector('.done')
     
-    // checkBox.classList.add('goleft3') 
-    // doneBox.classList.add('goleft3')
+    
     
     console.log(checked)
     console.log(userInfo)
     //데이터를 저장해서 좋아하는 장르에 있는 데이터를 fetch해서 메인페이지로 가져와야하나?
     //ㄴ이렇게해야 회원가입안거치고 바로 로그인했을때 장르연동됨
     //암튼 여기서 fetch post로 유저 등록
+    fetch('http://127.0.0.1:5201/api/users/signup', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+          userId: userInfo.userid,
+          email: userInfo.userEmail,
+          password: userInfo.userpw,
+          likeGenre: [...checked]
+      })
+    })
+    .then( res => res.json() )
+    .then( result => {
+      console.log(result)
+      if(result.code === 200){
+        checkBox.classList.add('goleft3') 
+        doneBox.classList.add('goleft3')
+      }
+    })
+
   }
   
   //자동체크된것 바로 버튼활성화 안되는것 해결하기
