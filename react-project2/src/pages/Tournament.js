@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Match from "../components/Match";
 import Player from "../components/Player";
 import TimeBar from "../components/Timebar";
-import WinnerPlayer from "../components/winnerPlayer";
+import WinnerPlayer from "../components/WinnerPlayer";
 
 import '../styles/Tournament.css'
 

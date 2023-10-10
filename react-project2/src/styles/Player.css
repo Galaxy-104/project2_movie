@@ -72,3 +72,8 @@
 .player-img:hover .genres-container{
     left: 0;
 }
+
+.player-img > svg{
+    position: absolute;
+    z-index: 1;
+}
