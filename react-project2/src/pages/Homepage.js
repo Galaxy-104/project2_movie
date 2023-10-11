@@ -14,6 +14,7 @@ function Homepage(){
     const [open, setOpen] = useState(false) 
     const [pickMovie, setPickMovie] = useState({})
     const [loading, setLoading] = useState(true)
+    const [likeMovieList, setLikeMovieList] = useState([])
 
     const close = () => {
       return setOpen(false)
@@ -22,7 +23,6 @@ function Homepage(){
     const [movies, setMovies] = useState([])
     //API가져오기
     useEffect(() => {
-      // console.log('패치가안되는거야 뭐야')
       fetch('http://localhost:5201/api/moviesdata/'
       ,{
         method: 'GET',
@@ -56,13 +56,13 @@ function Homepage(){
       .then( result => {
         console.log(result)
         setUsersGenre(result.user.likeGenre)
+        setLikeMovieList(result.user.likeMoive)
       })
 
     }, [])
 
     //1등영화의 장르가 들어올 배열
     const userPickLists = [...usersGenre]
-    // location.state.checked
 
     console.log(userPickLists)
     const winnerGenres = []
@@ -199,7 +199,7 @@ function Homepage(){
             })}
         
             
-          <Modal type='poster' open={open} close={close} pickMovie={pickMovie}>
+          <Modal type='poster' open={open} close={close} pickMovie={pickMovie} size='posterSize' likeMovieList={likeMovieList}>
           </Modal>
           
         </div>

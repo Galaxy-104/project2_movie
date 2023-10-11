@@ -1,13 +1,15 @@
-import React, { Component,useState } from "react";
+import React, { Component,useEffect,useState } from "react";
 import Button from "./Button";
 import YouTube from 'react-youtube'
 import '../styles/Modal.css'
 import Genres from '../api/Genres.json'
 
-function Modal ({children, open, type, close, pickMovie }){
+function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
 
   const [like, setLike] = useState(false)
+  const [likeList, setLikeList] = useState(likeMovieList)
   
+
   //줄거리 열고닫기
   const openP = () => {
     const p = document.querySelector('.content-box div p')
@@ -15,37 +17,95 @@ function Modal ({children, open, type, close, pickMovie }){
     p.classList.toggle('normalP')
   }
   // console.log(open)
-  // console.log(pickMovie)
-
-  const pickMovieGenre = []
-  open && pickMovie.genre_ids.length !== 0 && 
-  pickMovie.genre_ids.map(id => {
-    Genres.genres.map(genre => {
-      if(id==genre.id){
-        pickMovieGenre.push(genre.name)
-      }
-
+  
+  const clickModal = () => {
+    likeMovieList.map(list => {
+      // console.log(list)
+      // console.log(pickMovie)
+      return list === pickMovie.title ? setLike(true) : setLike(false)
     })
-  })
+  }
+ 
   // console.log(pickMovieGenre)
 
   //영화 즐겨찾기 추가
-  const likeMoive = () => {
+  const likeMoive = (e) => {
     console.log('추가')
-      setLike(true)
+    console.log(e.target.parentElement.innerText)
+    // console.log(window.localStorage.getItem('accessToken') )
       //fetch로 user 선호하는 장르에 해당 영화 추가
+      fetch('http://localhost:5201/api/users/likeMoive', 
+      {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type':'application/json',
+          Authorization: window.localStorage.getItem('accessToken')  
+        },
+        body: JSON.stringify({
+          likeMoive: pickMovie.title
+        })
+      })
+      .then( res => res.json() )
+      .then( result =>{
+        console.log(result)
+        console.log(likeList)
+        console.log(pickMovie.title)
+        console.log(likeList.indexOf(pickMovie.title) === -1)
+        setLike(true)
+        const newLists = [...likeList]
+        if(likeList.indexOf(pickMovie.title) === -1){
+          newLists.push(pickMovie.title)
+        }
+        setLikeList(newLists)
+      })
   }
 
   //영화 즐겨찾기 해제
-  const unlikeMoive = () => {
+  const unlikeMoive = (e) => {
     console.log('해제')
-    setLike(false)
-    //fetch로 user 선호하는 장르에 해당 영화 해제
+    console.log(e.target.parentElement.innerText)
+    fetch('http://localhost:5201/api/users/unlikeMovie', 
+      {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type':'application/json',
+          Authorization: window.localStorage.getItem('accessToken')  
+        },
+        body: JSON.stringify({
+          likeMoive: e.target.parentElement.innerText
+        })
+      })
+      .then( res => res.json() )
+      .then( result =>{
+        console.log(result)
+        setLike(false)
+        const newLists = [...likeList]
+        const deleteList = newLists.filter(list => {
+          return list !== pickMovie.title
+        })
+
+        setLikeList(deleteList)
+
+      })
   }
 
+  console.log(likeList)
   if(type === 'poster' && open){
+    const pickMovieGenre = []
+    open && pickMovie.genre_ids.length !== 0 && 
+    pickMovie.genre_ids.map(id => {
+      Genres.genres.map(genre => {
+        if(id==genre.id){
+          pickMovieGenre.push(genre.name)
+        }
+      })
+    })
+
+
     return( 
-    <div className={`Modal ${open ? 'open' : 'close'}`}>
+    <div className={`Modal ${open ? 'open' : 'close'} ${size}`} onClick={clickModal}>
       <>
                <div className='img-box'>
                   <img src={`https://image.tmdb.org/t/p/original/${pickMovie.poster_path}`}></img>
@@ -91,7 +151,7 @@ function Modal ({children, open, type, close, pickMovie }){
     </div>
     )
   }else if(type === 'children' && open){
-    return <div className={`Modal ${open ? 'open' : 'close'}`}>
+    return <div className={`Modal ${open ? 'open' : 'close'} ${size}`}>
       {children}
     </div>
   }
@@ -100,5 +160,5 @@ function Modal ({children, open, type, close, pickMovie }){
 export default Modal
 
 Modal.defaultProps = {
-  open: false
+  open: false,
 }

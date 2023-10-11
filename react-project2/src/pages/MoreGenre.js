@@ -77,7 +77,7 @@ function MoreGenre(){
       <Nav></Nav>
       <h3 className="maintitle">{location.state.title}</h3>
       <Movies movieLists={moreMovieList} pickPoster={pickPoster}></Movies>
-      <Modal type='poster' open={open} pickMovie={pickMovie} close={close}></Modal>
+      <Modal type='poster' open={open} pickMovie={pickMovie} close={close} size='posterSize'></Modal>
     </div>
   )
 }
