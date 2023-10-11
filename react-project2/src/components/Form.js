@@ -291,10 +291,25 @@ function Form({type, handleClick, genreLists}){
     const loginId = e.target.parentElement.firstElementChild.lastElementChild
     const loginPw = e.target.parentElement.firstElementChild.nextElementSibling.lastElementChild    
 
+    const loginUser = await fetch('http://localhost:5201/api/users/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+          email: loginId.value,
+          password: loginPw.value,
+      })
+    })
+    .then( res => res.json())
+    .then( result => {
+      console.log(result)
+
+      if(result.code === 200){
+        navigate('/home')
+        window.localStorage.setItem('accessToken', `${result.accessToken}`)
+      }
+    })
     console.log('id:',loginId.value)
     console.log('pw:',loginPw.value)
-
-    navigate('/home')
   }
 
   

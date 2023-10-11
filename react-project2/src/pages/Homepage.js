@@ -38,15 +38,35 @@ function Homepage(){
         setMovies(movies)
       })
     },[])
-    const location = useLocation()
-    console.log(location)
+
+    const [ usersGenre, setUsersGenre ] = useState([])
+
+    useEffect(() => {
+      
+      fetch('http://localhost:5201/api/users/check', 
+      {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type':'application/json',
+          Authorization: window.localStorage.getItem('accessToken')  
+        },
+      })
+      .then( res => res.json() )
+      .then( result => {
+        console.log(result)
+        setUsersGenre(result.user.likeGenre)
+      })
+
+    }, [])
+
     //1등영화의 장르가 들어올 배열
-    const userPickLists = [80, 14, 18]
+    const userPickLists = [...usersGenre]
     // location.state.checked
-    
-    const winnerGenres = []
 
     console.log(userPickLists)
+    const winnerGenres = []
+
     //장르 번호와 이름 연결
     userPickLists.map(userPickList => {
       // console.log(userPickList)

@@ -14,6 +14,11 @@ function Nav(){
     navigate('/home')
   }
 
+  // 내 정보 클릭
+  const account = () => {
+    navigate('/account')
+  }
+
   //로그아웃 클릭
   const logout = () => {
     navigate('/login', {state:{genres:[]}})
@@ -56,7 +61,7 @@ function Nav(){
     </svg>
     <div className="btn-box">
       <div onClick={toLike} className='menu'>즐겨찾기</div>
-      <div onClick={toLike} className='menu'>프로필 수정</div>
+      <div onClick={account} className='menu'>프로필 수정</div>
       <div onClick={logout} className='menu'>로그아웃</div>
     </div>
     </div>
