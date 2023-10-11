@@ -7,7 +7,7 @@ const MoiveSchema = new Schema({
   adult: {
     type:Boolean,
   },
-  genre_ids:[{
+  benre_ids:[{
     type: Number,
   }],
   id: {
@@ -24,9 +24,6 @@ const MoiveSchema = new Schema({
   },
   poster_path: {
     type: String,
-  },
-  video_path: {
-    type: Array,
   },
   release_date: {
     type: Date,
