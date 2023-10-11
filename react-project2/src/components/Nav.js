@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import '../styles/Nav.css'
@@ -34,6 +34,20 @@ function Nav(){
       setOpen(true)
     }
   }
+
+  //메뉴 외부, 즐겨찾기버튼 클릭시 메뉴 닫히기
+  useEffect(() => {
+    document.addEventListener('click', function(e){
+      const btnBox = document.querySelector('.btn-box')
+      const moreBtn = document.querySelector('.more')
+      // console.log(e.target)
+      if(moreBtn && !moreBtn.contains(e.target)){
+        btnBox.classList.remove('dropOpen')
+        setOpen(false)
+      }
+    })
+  },[])
+
   return(
     <div className={`Nav`}>
     <img src={logo} onClick={toHome}></img>
@@ -41,9 +55,9 @@ function Nav(){
       <path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z"/>
     </svg>
     <div className="btn-box">
-      <div onClick={toLike}>즐겨찾기</div>
-      <div onClick={toLike}>내 정보 수정</div>
-      <div onClick={logout}>로그아웃</div>
+      <div onClick={toLike} className='menu'>즐겨찾기</div>
+      <div onClick={toLike} className='menu'>프로필 수정</div>
+      <div onClick={logout} className='menu'>로그아웃</div>
     </div>
     </div>
   )
