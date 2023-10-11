@@ -1,5 +1,11 @@
+const express = require('express')
+const app = express()
 const config = require('./config')
 const jwt = require('jsonwebtoken')
+const cookieParser = require('cookie-parser')
+
+// 쿠키 테스트
+app.use(cookieParser())
 
 //토큰 생성
 const makeToken = (user) => {
@@ -20,11 +26,13 @@ const makeToken = (user) => {
 
 //사용자 권한 검증
 const isAuth = (req, res, next) => {
-  const cookieToken = req.headers.cookie
-  if(!cookieToken){
+  const token = req.headers.authorization
+
+  // console.log(token)
+  if(!token){
     res.status(401).json({code: 401, message: '토큰이 유효하지 않습니다.'})
   }else{
-    const token = cookieToken.slice(6, cookieToken.length)
+    // const token = bearerToken.slice(7, bearerToken.length)
 
     jwt.verify(token, config.JWT_SECRET, (err, userInfo) => {
       if(err && err.name === 'TokenExpiredError'){

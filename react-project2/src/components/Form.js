@@ -255,13 +255,12 @@ function Form({type, handleClick, genreLists}){
       console.log(result)
 
       if(result.code === 200){
-        // navigate('/home',{state:{checked}})
+        navigate('/home')
+        window.localStorage.setItem('accessToken', `${result.accessToken}`)
       }
     })
     console.log('id:',loginId.value)
     console.log('pw:',loginPw.value)
-
-    
   }
 
   

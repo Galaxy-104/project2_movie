@@ -4,7 +4,6 @@ const cors = require('cors')
 const config = require('./config')
 const app = express()
 
-
 const moviesRouter = require('./src/routes/movies')
 const ResultRouter = require('./src/routes/results')
 const usersRouter = require('./src/routes/users')

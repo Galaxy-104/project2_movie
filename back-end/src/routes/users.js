@@ -45,17 +45,25 @@ router.post('/login', expressAsyncHandler(async (req, res, next) => {
     res.status(401).json({code: 401, message: '비밀번호가 일치하지 않습니다.'})
   }else{
     const { userId, email, isAdmin, likeGenre } = loginUser
-    res.cookie('token', makeToken(loginUser),{
-      domain: 'http://127.0.0.1:3000',
-            sameSite:'none',
-            secure: true, // https, ssl 모드에서만
-            maxAge: 1000*60*60*24*1, // 1D
-            httpOnly: true, // javascript 로 cookie에 접근하지 못하게 한다.
-            // domain: 'localhost'
-    }).json({
+
+    res.json({ 
       code: 200,
-      message: '로그인에 성공하였습니다!'
+      message: '로그인에 성공하였습니다!',
+      accessToken: makeToken(loginUser)
     })
+    
+    // res.cookie('token', makeToken(loginUser),{
+    //         domain: 'http://127.0.0.1:3000',
+    //         sameSite:'none',
+    //         secure: true, // https, ssl 모드에서만
+    //         maxAge: 1000*60*60*24*1, // 1D
+    //         httpOnly: true, // javascript 로 cookie에 접근하지 못하게 한다.
+    //         // domain: 'localhost'
+    // }).json({
+    //   code: 200,
+    //   message: '로그인에 성공하였습니다!',
+    //   likeGenre
+    // })
   }
 }))
 
