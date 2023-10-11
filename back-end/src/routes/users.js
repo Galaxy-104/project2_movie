@@ -90,16 +90,6 @@ router.get('/', expressAsyncHandler(async (req, res, next) => {
   }
 }))
 
-//현재 유저 조회
-router.get('/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
-  const user = await User.findOne({_id: req.params.id})
-  if(!user){
-    res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})
-  }else{
-    res.json({code: 200, user})
-  }
-}))
-
 
 
 module.exports = router
