@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+import Genres from '../api/Genres.json'
 import Nav from "../components/Nav";
 import Button from "../components/Button";
 import AccountGenres from "../components/AccountGenres";
@@ -31,6 +34,10 @@ function Account(){
         })
 
     }, [])
+
+    useEffect(() => {
+        console.log(userInfo)
+    }, [userInfo])
 
     const checkPassword = (e) => {
         const password = document.querySelector('.account-page input#user-password')
@@ -89,21 +96,28 @@ function Account(){
         }
     }
 
+    const sendChangeUserInfo = () => {
+
+    }
+
     // 페이지 변화 인식
     return (
         <div className="account-page">
             <Nav></Nav>
             <div className="account-container">
-                {currentPage === "profile"? 
-                <AccountProfile handleChange={checkPassword} userInfo={userInfo}/> :
-                <AccountGenres handleClick={checkInputs}/>
-                }
-                
-                
-                <div className="account-edit-btn">
-                    <Button handleClick={changePage}>다음</Button>
+                <div className={`account-profile ${currentPage === "profile"? "" : "hidden"}`}>
+                    <AccountProfile handleChange={checkPassword} userInfo={userInfo}/>
+                    <div className="account-edit-btn">
+                        <Button handleClick={changePage}>다음</Button>
+                    </div>
+                </div> 
+                <div className={`account-genres ${currentPage === "profile"? "" : "visible"}`} >
+                    <AccountGenres handleClick={checkInputs} userInfo={userInfo}/>
+                    <div className="account-edit-btn">
+                        <Button handleClick={changePage}>이전</Button>
+                        <Button handleClick={sendChangeUserInfo}>수정하기</Button>
+                    </div>
                 </div>
-                
             </div>
             
         </div>
