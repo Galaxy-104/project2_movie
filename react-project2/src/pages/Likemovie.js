@@ -62,6 +62,7 @@ function Likemovie(){
 
       }
     })
+    window.scrollTo({top:0, behavior:"smooth"})
   }
 
   //장르 id name으로 변환
@@ -142,7 +143,7 @@ function Likemovie(){
 
 
               }
-              <Button btnClass='unLikeBtn' handleClick={unLike}>즐겨찾기 해제하기</Button>
+              <Button btnClass='unLikeBtn' handleClick={unLike}>즐겨찾기 해제</Button>
             </>
           </Modal>
           :
