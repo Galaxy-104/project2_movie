@@ -27,13 +27,9 @@ function Loginpage(){
     window.scrollTo({top:950, behavior:"smooth"})
   }
   
-  const location = useLocation()
-  console.log(location)
-  const genreLists = location.state.genres
-
+  // const {state: { genres }} = useLocation() 
+  const genreLists = window.localStorage.getItem('genreLists')
   console.log(genreLists)
-    
- 
 
   return(
     <div className="Loginpage">
@@ -52,7 +48,7 @@ function Loginpage(){
       <Button btnClass='downbtn' handleClick={gofrom}>↓</Button>
       <div className="form">
         <Form type='login'></Form>
-        <Form type='signup' genreLists={genreLists}></Form>
+        <Form type='signup' genreLists={genres === null? [] : genres}></Form>
         {/* <Form type='checkBox' genreLists={genreLists}></Form> */}
         <Form type='done'></Form>
       </div>

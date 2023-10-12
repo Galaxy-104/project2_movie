@@ -97,7 +97,36 @@ function Account(){
     }
 
     const sendChangeUserInfo = () => {
+        const userId = document.querySelector('.account-page .account-container input#user-id')
+        const userPw = document.querySelector('.account-page .account-container input#user-password')
 
+        const userLikeGenres = []
+        const genreCheckBoxes = document.querySelectorAll('.account-page .account-container .inputs input')
+        genreCheckBoxes.forEach((genre) => {
+            if(genre.checked){
+                userLikeGenres.push(genre.value)
+            }
+        })
+
+        fetch('http://localhost:5201/api/users/account', {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Content-Type':'application/json',
+                Authorization: window.localStorage.getItem('accessToken')  
+            },
+            body: JSON.stringify({
+                userId: userId.value,
+                password: userPw.value,
+                likeGenre: [...userLikeGenres]
+            })
+        })
+        .then( res => res.json())
+        .then( result => { 
+            window.localStorage.removeItem('accessToken')
+            window.localStorage.setItem('accessToken', `${result.token}`)
+            setCurrentPage("profile")
+        })
     }
 
     // 페이지 변화 인식
@@ -112,10 +141,25 @@ function Account(){
                     </div>
                 </div> 
                 <div className={`account-genres ${currentPage === "profile"? "" : "visible"}`} >
+                    
+                    {/* <div className="user-likes">
+                        <h4>좋아하는 장르를 3개 이상 선택해주세요!</h4>
+                        <div className="input-box">
+                        {Genres.genres.map((genre,id) => {
+                            // console.log(genre)
+                            return (
+                                <div className="inputs" key={id}>
+                                    <input type='checkbox' name='genre' id={genre.name} value={genre.id} onClick={checkInputs}/>
+                                    <label htmlFor={genre.name}>{genre.name}</label>
+                                </div>
+                            )
+                        })}
+                        </div>
+                    </div> */}
                     <AccountGenres handleClick={checkInputs} userInfo={userInfo}/>
                     <div className="account-edit-btn">
-                        <Button handleClick={changePage}>이전</Button>
-                        <Button handleClick={sendChangeUserInfo}>수정하기</Button>
+                        <Button handleClick={changePage} btnClass={"account-profile-btn"}>이전</Button>
+                        <Button handleClick={sendChangeUserInfo} btnClass={"account-genres-btn"}>수정하기</Button>
                     </div>
                 </div>
             </div>

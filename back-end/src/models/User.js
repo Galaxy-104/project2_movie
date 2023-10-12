@@ -26,7 +26,7 @@ const userSchema = new Schema({
     type: String,
   }],
   //즐겨찾기 한 영화 목록
-  likeMoive: [{
+  likeMovie: [{
     type: String,
   }],
   createdAt: {

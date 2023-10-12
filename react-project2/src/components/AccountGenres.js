@@ -5,16 +5,16 @@ function AccountGenres({ handleClick, userInfo }){
 
     useEffect(() => {
         
-        if(userInfo.likeGenre !== undefined)
-        console.log(userInfo.likeGenre)
-        const genreCheckBoxes = document.querySelectorAll('.account-page .inputs input')
-        console.log(genreCheckBoxes) 
-        genreCheckBoxes.forEach((checkBox) => {
-            if(userInfo.likeGenre.includes(checkBox.value)){
-                console.log(checkBox)
-                checkBox.checked = true
-            }
-        })
+        if(userInfo.likeGenre !== undefined){
+            // console.log(userInfo.likeGenre)
+            const genreCheckBoxes = document.querySelectorAll('.account-page .inputs input')
+            genreCheckBoxes.forEach((checkBox) => {
+                if(userInfo.likeGenre.includes(checkBox.value)){
+                    checkBox.checked = true
+                }
+            })
+        }
+       
     }, [userInfo])
 
     return (

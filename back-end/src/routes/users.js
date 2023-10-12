@@ -80,6 +80,34 @@ router.post('/logout', expressAsyncHandler(async (req, res, next) => {
   res.json({code:200, message: '로그아웃하였습니다.'})
 }))
 
+// 사용자 정보 수정
+router.put('/account', isAuth, expressAsyncHandler(async (req, res, next) => {
+  const user = await User.findOne({ _id: req.user._id })
+
+  if(user){
+    user.userId = req.body.userId || user.userId,
+    user.email = user.email,
+    user.password = req.body.password === ""? user.password : req.body.password,
+    user.isAdmin = user.isAdmin,
+    user.likeGenre = req.body.likeGenre,
+    user.likeMovie = user.likeMovie,
+    user.createdAt = user.createdAt,
+    user.lastModifiedAt = new Date()
+  }else{
+    res.status(404).json({ message: "사용자를 찾을 수 없습니다."})
+  }
+
+  const newUser = await user.save()
+  console.log(newUser)
+  const { userId, email, likeGenre } = newUser
+  res.json({
+    code: 200,
+    message: "사용자 정보가 변경되었습니다.",
+    token: makeToken(newUser),
+    user: { userId, email, likeGenre }
+  })
+}))
+
 //전체 유저 조회
 router.get('/', expressAsyncHandler(async (req, res, next) => {
   const user = await User.find({})
