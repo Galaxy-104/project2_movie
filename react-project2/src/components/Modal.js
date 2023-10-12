@@ -9,8 +9,9 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
   const [like, setLike] = useState(false)
   const [likeList, setLikeList] = useState(likeMovieList)
 
-  console.log(likeMovieList)
-  console.log(likeList)
+  useEffect(() => {
+    setLikeList(likeMovieList)
+  },[likeMovieList])
 
   //줄거리 열고닫기
   const openP = () => {
