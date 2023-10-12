@@ -5,7 +5,7 @@ import Nav from '../components/Nav'
 import Genres from '../api/Genres.json'
 import YouTube from 'react-youtube'
 import Modal from "../components/Modal";
-
+import Button from "../components/Button";
 
 function Likemovie(){
 
@@ -44,7 +44,7 @@ function Likemovie(){
         const newLists = []
         data.movies.map(list => {
           if(result.user.likeMoive.indexOf(list.title) !== -1){
-            console.log(list)
+            // console.log(list)
             newLists.push(list)
             setMovieInfo(newLists)
           }          
@@ -74,6 +74,28 @@ function Likemovie(){
     })
   })
 
+  //즐겨찾기 해제
+  const unLike = () => {
+    console.log('즐찾해제')
+    fetch('http://localhost:5201/api/users/unlikeMovie', 
+      {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type':'application/json',
+          Authorization: window.localStorage.getItem('accessToken')  
+        },
+        body: JSON.stringify({
+          likeMoive: pickLikeMovie.title
+        })
+      })
+      .then( res => res.json() )
+      .then( result =>{
+        console.log(result)
+        window.location.reload()
+      })
+  }
+
 
   console.log(movieInfo)
   console.log(pickLikeMovie)
@@ -98,8 +120,8 @@ function Likemovie(){
           <Modal size='infoMovie' type='children' open={open}>
             <>
               <h2>{pickLikeMovie.title}</h2>
-              <h4>{pickLikeMovie.release_date.slice(0,10)}</h4>
-              <h4>{genrename.join(' ')}</h4>
+              <h4>개봉일 : {pickLikeMovie.release_date.slice(0,10)}</h4>
+              <h4>장르 : {genrename.join(', ')}</h4>
               <p>{pickLikeMovie.overview}</p>
               {pickLikeMovie.video_path.length == 0 ?
                 <div className="noTrailer">재생 가능한 트레일러가 없습니다</div>
@@ -120,6 +142,7 @@ function Likemovie(){
 
 
               }
+              <Button btnClass='unLikeBtn' handleClick={unLike}>즐겨찾기 해제하기</Button>
             </>
           </Modal>
           :

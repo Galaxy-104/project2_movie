@@ -9,9 +9,8 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
   const [like, setLike] = useState(false)
   const [likeList, setLikeList] = useState(likeMovieList)
 
-  useEffect(() => {
-    setLikeList(likeMovieList)
-  })
+  console.log(likeMovieList)
+  console.log(likeList)
 
   //줄거리 열고닫기
   const openP = () => {
@@ -44,9 +43,8 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
         // console.log(likeList.indexOf(pickMovie.title) === -1)
         setLike(true)
         const newLists = [...likeList]
-        if(likeList.indexOf(pickMovie.title) === -1){
-          newLists.push(pickMovie.title)
-        }
+        newLists.push(pickMovie.title)
+
         setLikeList(newLists)
       })
   }
@@ -80,7 +78,7 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
 
       })
   }
-  console.log(like)
+  // console.log(like)
   console.log(likeList)
 
   if(type === 'poster' && open){

@@ -14,12 +14,12 @@ function MoreGenre(){
   
 
   const location = useLocation()
-  // console.log(location)
+  console.log(location)
   const movieLists = location.state.filter
   // console.log(movieLists)
 
   const firstList = movieLists.slice(0, 40)
-  const [likeMovieList, setLikeMovieList] = useState([])
+  const [likeMovieList, setLikeMovieList] = useState(location.state.likeMovieList)
 
   const [moreMovieList, setmoreMovieList] = useState(firstList)
   console.log(moreMovieList)
