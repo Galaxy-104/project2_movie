@@ -96,6 +96,9 @@
   /* right: 144px; */
   /* border: 1px solid white; */
 }
+.youtube2{
+  width: 100%;
+}
 .modal-title{
   margin-top: 50px;
 }
@@ -109,4 +112,15 @@
   margin-left: 0.8rem;
   scale: 1.2;
   cursor: pointer;
+}
+
+.infoMovie{
+  position: relative;
+  left: 0; top: 0; 
+  transform: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

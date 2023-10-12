@@ -22,21 +22,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  cursor: pointer;
 }
 .like-list div{
-  flex: 1.5;
+  flex: 1.8;
 }
 .like-list h4{
   flex: 2;
+  margin: 0 1rem;
 }
 
 .like-info{
   flex: 3;
   border: 1px solid var(--line-color);
-  margin: 4rem;
+  margin: 3rem;
+  padding: 2rem;
 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+}
+.like-info > p{
+  font-weight: normal;
+}
+.noTrailer{
+  /* font-size: 1.5rem; */
+  /* text-shadow: 0 0 5px var(--main-color); */
+  font-weight: bold;
 }

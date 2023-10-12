@@ -58,7 +58,7 @@ function Homepage(){
         setUsersGenre(result.user.likeGenre)
         setLikeMovieList(result.user.likeMoive)
       })
-
+      console.log(likeMovieList)
     }, [])
 
     //1등영화의 장르가 들어올 배열
@@ -102,7 +102,7 @@ function Homepage(){
         // console.log(filter.winnerGenre.name == e.target.parentElement.previousElementSibling.innerHTML)
         if(filter.winnerGenre.name == e.target.parentElement.previousElementSibling.innerHTML){
           console.log(filter)
-          navigate(`/more`, {state: {filter: filter.filtered, title: filter.winnerGenre.name}})    
+          navigate(`/more`, {state: {filter: filter.filtered, title: filter.winnerGenre.name, likeMovieList: likeMovieList}})    
         }
       })
     }

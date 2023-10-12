@@ -8,23 +8,16 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
 
   const [like, setLike] = useState(false)
   const [likeList, setLikeList] = useState(likeMovieList)
-  
+
+  useEffect(() => {
+    setLikeList(likeMovieList)
+  })
 
   //줄거리 열고닫기
   const openP = () => {
     const p = document.querySelector('.content-box div p')
     // console.log(p)
     p.classList.toggle('normalP')
-  }
-  // console.log(open)
-  
-  const clickModal = () => {
-    console.log(like)
-    likeList.map(list => {
-      // console.log(list)
-      // console.log(pickMovie)
-      return list === pickMovie.title ? setLike(true) : setLike(false)
-    })
   }
 
 
@@ -87,7 +80,7 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
 
       })
   }
-
+  console.log(like)
   console.log(likeList)
 
   if(type === 'poster' && open){
@@ -103,7 +96,7 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
 
 
     return( 
-    <div className={`Modal ${open ? 'open' : 'close'} ${size}`} onClick={clickModal}>
+    <div className={`Modal ${open ? 'open' : 'close'} ${size}`}>
       <>
                <div className='img-box'>
                   <img src={`https://image.tmdb.org/t/p/original/${pickMovie.poster_path}`}></img>
@@ -123,7 +116,6 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
                     </h2>
                     <h4>{pickMovie && pickMovie.release_date.slice(0, 10)}</h4>
                     <h4>장르: {pickMovieGenre.join(', ')}</h4>
-                    {/* <h4>평점: {pickMovie.rating}</h4> */}
                     <p className="modalP normalP" onClick={openP}>{pickMovie.overview ? pickMovie.overview : '줄거리가 없습니다.'}</p>
                     
                   </div>  
