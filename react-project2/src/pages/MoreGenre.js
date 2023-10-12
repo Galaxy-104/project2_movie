@@ -14,11 +14,12 @@ function MoreGenre(){
   
 
   const location = useLocation()
-  // console.log(location)
+  console.log(location)
   const movieLists = location.state.filter
   // console.log(movieLists)
 
   const firstList = movieLists.slice(0, 40)
+  const [likeMovieList, setLikeMovieList] = useState(location.state.likeMovieList)
 
   const [moreMovieList, setmoreMovieList] = useState(firstList)
   console.log(moreMovieList)
@@ -26,9 +27,28 @@ function MoreGenre(){
   useEffect(() => {
     document.querySelector('.MoreGenre').addEventListener('scroll', scrolling)
   },[moreMovieList])
-
+  
+  useEffect(() => {
+    fetch('http://localhost:5201/api/users/check', 
+      {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type':'application/json',
+          Authorization: window.localStorage.getItem('accessToken')  
+        },
+      })
+      .then( res => res.json() )
+      .then( result => {
+        console.log(result)
+        console.log(result.user.likeMoive)
+        setLikeMovieList(result.user.likeMoive)
+      })
+    },[])
+    console.log(likeMovieList)
+    
   const pickPoster = (e) => {
-    console.log(e.target)
+    // console.log(e.target)
     {movieLists.map((movie, id) => {
       // console.log(movie)
       // console.log(`https://image.tmdb.org/t/p/original/${movie.poster_path}` === e.target.src)
@@ -77,7 +97,7 @@ function MoreGenre(){
       <Nav></Nav>
       <h3 className="maintitle">{location.state.title}</h3>
       <Movies movieLists={moreMovieList} pickPoster={pickPoster}></Movies>
-      <Modal type='poster' open={open} pickMovie={pickMovie} close={close}></Modal>
+      <Modal type='poster' open={open} pickMovie={pickMovie} close={close} size='posterSize' likeMovieList={likeMovieList}></Modal>
     </div>
   )
 }

@@ -6,6 +6,8 @@ import logo from '../assets/logo.png'
 import Form from "../components/Form";
 
 function Loginpage(){
+
+
   //동적 효과
   useEffect(()=> {
     const img = document.querySelector('img')
@@ -27,9 +29,11 @@ function Loginpage(){
     window.scrollTo({top:950, behavior:"smooth"})
   }
   
-  // const {state: { genres }} = useLocation() 
-  const genreLists = window.localStorage.getItem('genreLists')
-  console.log(genreLists)
+  const location = useLocation()
+  console.log(location)
+  const [genreLists, setGenreLists] = useState(location.state && location.state.genres)
+    
+ 
 
   return(
     <div className="Loginpage">

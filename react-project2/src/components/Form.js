@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import '../styles/Form.css'
 import Genres from '../api/Genres.json'
+import Modal from './Modal'
 
 
 
 function Form({type, handleClick, genreLists}){
 
   const [disabled, setDisabled] = useState(true)
+  const [open, setOpen] = useState(false) 
   const [checked, setChecked] = useState(genreLists)
   
 
@@ -278,10 +280,11 @@ function Form({type, handleClick, genreLists}){
     }else{
       signupOKBtn.classList.add('disabled')
       signupOKBtn.disabled = true
-    }
-
-    
+    }    
   },)
+  const close = () => {
+    return setOpen(false)
+  }
 
   const [ loginErrorMsg, setLoginErrorMsg ] = useState("")
 
@@ -306,6 +309,8 @@ function Form({type, handleClick, genreLists}){
       if(result.code === 200){
         navigate('/home')
         window.localStorage.setItem('accessToken', `${result.accessToken}`)
+      }else if(result.code === 401){
+        setOpen(true)
       }
     })
     console.log('id:',loginId.value)
@@ -353,6 +358,13 @@ function Form({type, handleClick, genreLists}){
         <Button btnClass='loginbtn' handleClick={login} disabled={disabled}>로그인</Button>
         <p className="registerbtn" onClick={goSignup}>아직 회원이 아니신가요?</p>
         <p className="registerbtn" onClick={goworldcup}>이상형 월드컵 다시 하러 가기</p>
+        <Modal type='children' open={open} size='messageSize'>
+          <div className="message">
+            <span>Error!</span><br/>
+            <p>아이디나 비밀번호를 확인해주세요</p>
+          </div>
+          <Button btnClass='closeBtn' handleClick={close}>x</Button>
+        </Modal>
       </div>
     )
   }else if(type == 'signup'){ //회원가입 폼

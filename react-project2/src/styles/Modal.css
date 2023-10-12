@@ -1,8 +1,6 @@
 @import url('../global.css');
 
 .Modal{
-  width: 80%; height: 60%;
-  padding: 20px;
   text-align: left;
   background-color: var(--bg-color);
   border: 2px solid var(--line-color);
@@ -31,7 +29,17 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
+/* 사이즈 */
+.posterSize{
+  width: 80%; height: 60%;
+  padding: 20px;
+}
+.messageSize{
+  width: 35%; height: 20%;
+  padding: 20px;
+  box-shadow: 0 0 10px var(--main-color);
+  border: 1px solid var(--main-color);
+}
 
 
 .open{
@@ -88,6 +96,9 @@
   /* right: 144px; */
   /* border: 1px solid white; */
 }
+.youtube2{
+  width: 100%;
+}
 .modal-title{
   margin-top: 50px;
 }
@@ -101,4 +112,15 @@
   margin-left: 0.8rem;
   scale: 1.2;
   cursor: pointer;
+}
+
+.infoMovie{
+  position: relative;
+  left: 0; top: 0; 
+  transform: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

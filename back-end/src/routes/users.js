@@ -67,10 +67,10 @@ router.post('/login', expressAsyncHandler(async (req, res, next) => {
 // 로그인 중인 유저 확인하기
 router.get('/check', isAuth, expressAsyncHandler(async (req, res, next) => {
   const user = await User.findOne({ _id: req.user._id })
-  const { userId, email, likeGenre } = user
+  const { userId, email, likeGenre, _id, likeMoive } = user
 
   res.json({
-    code: 200, user: { userId, email, likeGenre }
+    code: 200, user: { userId, email, likeGenre, _id, likeMoive }
   })
 }))
 
@@ -117,6 +117,43 @@ router.get('/', expressAsyncHandler(async (req, res, next) => {
     res.json({code: 200, user})
   }
 }))
+
+//좋아하는 영화 목록에 추가
+router.put('/likeMoive', isAuth, expressAsyncHandler(async (req, res, next) => {
+  const movie = await User.updateOne(
+    {_id: req.user._id},
+    {$push: {likeMoive: req.body.likeMoive}}
+  )
+  if(!movie){
+    res.status(404).json({code: 404, message: '영화를 찾을 수 없습니다.'})
+  }else{
+    console.log(req.body)
+    res.json({
+      code: 200,
+      message: '좋아하는 영화 목록에 추가되었습니다.',
+      movie
+    })
+  }
+}))
+
+//좋아하는 영화 목록에서 삭제
+router.put('/unlikeMovie', isAuth, expressAsyncHandler(async (req, res, next) => {
+  const movie = await User.updateOne(
+    {_id: req.user._id},
+    {$pull: {likeMoive: req.body.likeMoive}}
+  )
+  if(!movie){
+    res.status(404).json({code: 404, message: '영화를 찾을 수 없습니다.'})
+  }else{
+    console.log(req.body)
+    res.json({
+      code: 200,
+      message: '좋아하는 영화 목록에서 삭제되었습니다.',
+      movie
+    })
+  }
+}))
+
 
 
 
