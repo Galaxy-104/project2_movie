@@ -52,7 +52,7 @@ function Loginpage(){
       <Button btnClass='downbtn' handleClick={gofrom}>↓</Button>
       <div className="form">
         <Form type='login'></Form>
-        <Form type='signup' genreLists={genres === null? [] : genres}></Form>
+        <Form type='signup' genreLists={genreLists}></Form>
         {/* <Form type='checkBox' genreLists={genreLists}></Form> */}
         <Form type='done'></Form>
       </div>

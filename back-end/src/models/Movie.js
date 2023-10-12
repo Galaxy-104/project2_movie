@@ -7,7 +7,7 @@ const MoiveSchema = new Schema({
   adult: {
     type:Boolean,
   },
-  benre_ids:[{
+  genre_ids:[{
     type: Number,
   }],
   id: {

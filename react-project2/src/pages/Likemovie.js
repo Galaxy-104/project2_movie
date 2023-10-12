@@ -29,8 +29,8 @@ function Likemovie(){
       .then( res => res.json() )
       .then( result => {
         console.log(result)
-        console.log(result.user.likeMoive)
-        setUserLikeMovie(result.user.likeMoive)
+        console.log(result.user.likeMovie)
+        setUserLikeMovie(result.user.likeMovie)
 
         fetch('http://localhost:5201/api/moviesdata/'
       ,{
@@ -43,7 +43,7 @@ function Likemovie(){
         console.log(data)
         const newLists = []
         data.movies.map(list => {
-          if(result.user.likeMoive.indexOf(list.title) !== -1){
+          if(result.user.likeMovie.indexOf(list.title) !== -1){
             // console.log(list)
             newLists.push(list)
             setMovieInfo(newLists)
