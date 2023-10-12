@@ -6,6 +6,8 @@ import logo from '../assets/logo.png'
 import Form from "../components/Form";
 
 function Loginpage(){
+
+
   //동적 효과
   useEffect(()=> {
     const img = document.querySelector('img')
@@ -29,9 +31,7 @@ function Loginpage(){
   
   const location = useLocation()
   console.log(location)
-  const genreLists = location.state.genres
-
-  console.log(genreLists)
+  const [genreLists, setGenreLists] = useState(location.state && location.state.genres)
     
  
 
