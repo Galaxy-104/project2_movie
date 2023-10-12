@@ -360,7 +360,8 @@ function Form({type, handleClick, genreLists}){
         <p className="registerbtn" onClick={goworldcup}>이상형 월드컵 다시 하러 가기</p>
         <Modal type='children' open={open} size='messageSize'>
           <div className="message">
-            아이디나 비밀번호를 확인해주세요
+            <span>Error!</span><br/>
+            <p>아이디나 비밀번호를 확인해주세요</p>
           </div>
           <Button btnClass='closeBtn' handleClick={close}>x</Button>
         </Modal>

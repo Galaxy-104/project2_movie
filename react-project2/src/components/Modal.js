@@ -19,21 +19,18 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
   // console.log(open)
   
   const clickModal = () => {
-    likeMovieList.map(list => {
+    console.log(like)
+    likeList.map(list => {
       // console.log(list)
       // console.log(pickMovie)
       return list === pickMovie.title ? setLike(true) : setLike(false)
     })
   }
- 
-  // console.log(pickMovieGenre)
+
 
   //영화 즐겨찾기 추가
   const likeMoive = (e) => {
     console.log('추가')
-    console.log(e.target.parentElement.innerText)
-    // console.log(window.localStorage.getItem('accessToken') )
-      //fetch로 user 선호하는 장르에 해당 영화 추가
       fetch('http://localhost:5201/api/users/likeMoive', 
       {
         method: 'PUT',
@@ -49,9 +46,9 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
       .then( res => res.json() )
       .then( result =>{
         console.log(result)
-        console.log(likeList)
-        console.log(pickMovie.title)
-        console.log(likeList.indexOf(pickMovie.title) === -1)
+        // console.log(likeList)
+        // console.log(pickMovie.title)
+        // console.log(likeList.indexOf(pickMovie.title) === -1)
         setLike(true)
         const newLists = [...likeList]
         if(likeList.indexOf(pickMovie.title) === -1){
@@ -74,7 +71,7 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
           Authorization: window.localStorage.getItem('accessToken')  
         },
         body: JSON.stringify({
-          likeMoive: e.target.parentElement.innerText
+          likeMoive: pickMovie.title
         })
       })
       .then( res => res.json() )
@@ -92,6 +89,7 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
   }
 
   console.log(likeList)
+
   if(type === 'poster' && open){
     const pickMovieGenre = []
     open && pickMovie.genre_ids.length !== 0 && 
@@ -113,8 +111,7 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
                 <div className="content-box">
                   <div className="modal-contents">
                     <h2 className="modal-title">{pickMovie.title} 
-                    {/* 현재 영화마다 적용되지않음 */}
-                    {like ? 
+                    {likeList.indexOf(pickMovie.title) !== -1 ?
                       <svg onClick={unlikeMoive} xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
                         <path d="m233-80 65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Z"/>
                       </svg>
@@ -122,7 +119,7 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
                       <svg onClick={likeMoive} xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
                        <path d="m354-247 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-80l65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Zm247-350Z"/>
                       </svg>
-                      }
+                    }
                     </h2>
                     <h4>{pickMovie && pickMovie.release_date.slice(0, 10)}</h4>
                     <h4>장르: {pickMovieGenre.join(', ')}</h4>
@@ -142,7 +139,6 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
                     disablekb:1, //키보드조작막기
                     controls:0, //동영상컨트롤 표시 x
                     modestbranding: 1,
-                    //안먹히는기분
                   },}} onReady={(e)=> {e.target.mute()}} />
                   }
                 </div>

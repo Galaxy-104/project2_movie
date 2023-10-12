@@ -109,8 +109,8 @@ function Homepage(){
 
     //포스터 클릭
     const pickPoster = (e) => {
-      console.log(e.target)
-      console.log(filter.filtered)
+      // console.log(e.target)
+      // console.log(filter.filtered)
       {filter.map((filterMovie, id) => {
         filterMovie.filtered.map(movie => {
           // console.log(`https://image.tmdb.org/t/p/original/${movie.poster_path}` === e.target.src)

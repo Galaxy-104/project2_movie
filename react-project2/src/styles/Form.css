@@ -97,3 +97,13 @@ label{
   margin: 0;
   color: var(--main-color);
 }
+
+.message{
+  text-align: center;
+}
+.message > span{
+  color: var(--main-color);
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}

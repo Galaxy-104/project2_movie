@@ -35,8 +35,10 @@
   padding: 20px;
 }
 .messageSize{
-  width: 50%; height: 30%;
+  width: 35%; height: 20%;
   padding: 20px;
+  box-shadow: 0 0 10px var(--main-color);
+  border: 1px solid var(--main-color);
 }
 
 
