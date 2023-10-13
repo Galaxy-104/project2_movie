@@ -13,8 +13,6 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
     setLikeList(likeMovieList)
   },[likeMovieList])
 
-  
-
   //줄거리 열고닫기
   const openP = () => {
     const p = document.querySelector('.content-box div p')
@@ -26,7 +24,7 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
   //영화 즐겨찾기 추가
   const likeMoive = (e) => {
     console.log('추가')
-      fetch('http://localhost:5201/api/users/likeMoive', 
+      fetch('http://localhost:5201/api/users/likeMovie', 
       {
         method: 'PUT',
         credentials: 'include',
@@ -35,18 +33,20 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
           Authorization: window.localStorage.getItem('accessToken')  
         },
         body: JSON.stringify({
-          likeMoive: pickMovie.title
+          likeMovie: pickMovie._id
         })
       })
       .then( res => res.json() )
       .then( result =>{
         console.log(result)
-        // console.log(likeList)
+        console.log(likeList)
+        console.log(pickMovie)
+        console.log(pickMovie._id)
         // console.log(pickMovie.title)
         // console.log(likeList.indexOf(pickMovie.title) === -1)
         setLike(true)
         const newLists = [...likeList]
-        newLists.push(pickMovie.title)
+        newLists.push(pickMovie._id)
 
         setLikeList(newLists)
       })
@@ -65,7 +65,7 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
           Authorization: window.localStorage.getItem('accessToken')  
         },
         body: JSON.stringify({
-          likeMoive: pickMovie.title
+          likeMovie: pickMovie._id
         })
       })
       .then( res => res.json() )
@@ -74,7 +74,7 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
         setLike(false)
         const newLists = [...likeList]
         const deleteList = newLists.filter(list => {
-          return list !== pickMovie.title
+          return list !== pickMovie._id
         })
 
         setLikeList(deleteList)
@@ -105,7 +105,7 @@ function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
                 <div className="content-box">
                   <div className="modal-contents">
                     <h2 className="modal-title">{pickMovie.title} 
-                    {likeList.indexOf(pickMovie.title) !== -1 ?
+                    {likeList && likeList.indexOf(pickMovie._id) !== -1 ?
                       <svg onClick={unlikeMoive} xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
                         <path d="m233-80 65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Z"/>
                       </svg>

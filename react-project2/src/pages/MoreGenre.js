@@ -41,8 +41,8 @@ function MoreGenre(){
       .then( res => res.json() )
       .then( result => {
         console.log(result)
-        console.log(result.user.likeMoive)
-        setLikeMovieList(result.user.likeMoive)
+        console.log(result.user.likeMovie)
+        setLikeMovieList(result.user.likeMovie)
       })
     },[])
     console.log(likeMovieList)

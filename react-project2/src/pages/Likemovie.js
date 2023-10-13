@@ -6,6 +6,7 @@ import Genres from '../api/Genres.json'
 import YouTube from 'react-youtube'
 import Modal from "../components/Modal";
 import Button from "../components/Button";
+import { motion } from "framer-motion"
 
 function Likemovie(){
 
@@ -13,6 +14,7 @@ function Likemovie(){
   const [movieInfo, setMovieInfo] = useState([])
   const [open, setOpen] = useState(false)
   const [pickLikeMovie, setPickLikeMovie] = useState({})
+  const [loading, setLoading] = useState(true)
   const genrename = []
 
   //유저정보,영화정보 들고오기
@@ -43,11 +45,12 @@ function Likemovie(){
         console.log(data)
         const newLists = []
         data.movies.map(list => {
-          if(result.user.likeMovie.indexOf(list.title) !== -1){
-            // console.log(list)
+          if(result.user.likeMovie && result.user.likeMovie.indexOf(list._id) !== -1){
+            console.log(list)
             newLists.push(list)
             setMovieInfo(newLists)
-          }          
+          }
+          setLoading(false)
         })
       })
     })
@@ -87,7 +90,7 @@ function Likemovie(){
           Authorization: window.localStorage.getItem('accessToken')  
         },
         body: JSON.stringify({
-          likeMoive: pickLikeMovie.title
+          likeMovie: pickLikeMovie.title
         })
       })
       .then( res => res.json() )
@@ -100,12 +103,61 @@ function Likemovie(){
 
   console.log(movieInfo)
   console.log(pickLikeMovie)
+  
+  if(loading){
+    //로딩화면
+    const textContainer = {
+      start: { strokeDashoffset: 50, fill: "rgba(255, 255, 255, 0)" },
+      end: {
+          strokeDashoffset: 0, 
+          fill: "rgba(255, 255, 255, .7)",
+          transition: {
+              when: "beforeChildren",
+              staggerChildren: .5
+          }            
+       }
+    };
+    const textContents = {
+        start: { x: 1, fill: "rgba(255, 255, 255, 0)" },
+        end: { x: 0, fill: "rgba(255, 255, 255, 1)"}
+      }
+
+
+    return(
+      <div className="loading">
+        <motion.svg 
+              viewBox="0 0 300 300"
+              width="40rem"
+              height="30rem"
+
+              variants={textContainer}
+              initial="start"
+              animate="end"
+              strokeWidth=".7"
+              transition={{ default: { duration: 0.3 }}}
+              
+          >
+              <motion.text x="0" y="160" variants={textContents}>L</motion.text>
+              <motion.text x="40" y="160" variants={textContents}>o</motion.text>
+              <motion.text x="83" y="160" variants={textContents}>a</motion.text>
+              <motion.text x="124" y="160" variants={textContents}>d</motion.text>
+              <motion.text x="166" y="160" variants={textContents}>i</motion.text>
+              <motion.text x="185" y="160" variants={textContents}>n</motion.text>
+              <motion.text x="226" y="160" variants={textContents}>g</motion.text>
+              <motion.text x="266" y="160" variants={textContents}>.</motion.text>
+              <motion.text x="284" y="160" variants={textContents}>.</motion.text>
+              <motion.text x="302" y="160" variants={textContents}>.</motion.text>
+              
+        </motion.svg>
+      </div>
+    )
+  }else{
   return(
     <div className="Like-moive">
       <Nav></Nav>
       <div className="like-box">
         <div className="like-list-box">
-          {movieInfo.map(movie => {
+          {movieInfo && movieInfo.map((movie, id) => {
             return(
               <div className="like-list" onClick={clickPoster} id={movie._id}>
                 <div className="img-box">
@@ -119,7 +171,6 @@ function Likemovie(){
         <div className="like-info">
           {open ?
           <Modal size='infoMovie' type='children' open={open}>
-            <>
               <h2>{pickLikeMovie.title}</h2>
               <h4>개봉일 : {pickLikeMovie.release_date.slice(0,10)}</h4>
               <h4>장르 : {genrename.join(', ')}</h4>
@@ -144,14 +195,17 @@ function Likemovie(){
 
               }
               <Button btnClass='unLikeBtn' handleClick={unLike}>즐겨찾기 해제</Button>
-            </>
           </Modal>
           :
+          movieInfo.length === 0 ?
+            <>
+              <h2>관심있는 영화를 등록해주세요</h2>
+            </>
+            :
             <>
               <h2>영화정보를 보려면 해당 영화를 클릭하세요</h2>
             </>
-
-          }
+ }
 
 
 
@@ -159,7 +213,7 @@ function Likemovie(){
       </div>
     </div>
   )
-}
+}}
 
 
 
