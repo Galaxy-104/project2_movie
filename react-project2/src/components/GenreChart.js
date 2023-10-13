@@ -9,6 +9,7 @@ function GenreChart({ dataArr }){
 
     useEffect(() => {
         const result = [...dataArr]
+
         setLabels(
             result.map((genre) => {
                 if(genre.id !== 0){
@@ -27,7 +28,6 @@ function GenreChart({ dataArr }){
                 return likes !== undefined
             })
         )
-        console.log(dataArr)
 
     }, [])
 
