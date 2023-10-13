@@ -22,19 +22,12 @@ function Player({ player, handleClick, direction, isVisible, className }){
     }
     
     return (
-        <AnimatePresence>
+        <>
             {isVisible && (
-                <motion.div
-
+                <div
                     className={`player ${direction === 0 ? 'left' : 'right'} ${className === undefined? "" : className}`} 
                     onClick={handleClick}
                     key={player.id}
-
-                    LayoutGroup
-                    whileTap={{ scale: 1.1 }}
-                    // initial={{ opacity: 0, y: 20 }}
-                    // animate={{ opacity: 1, y: 0 }}
-                    // exit={{ opacity: 0, y: 20 }}
                 >
                     <div className="player-img">
                         <img src={`https://image.tmdb.org/t/p/original/${player.poster_path}`} alt={`${player.title}`}/>
@@ -47,10 +40,10 @@ function Player({ player, handleClick, direction, isVisible, className }){
                         </div>                                               
                     </div>
                     
-                </motion.div>            
+                </div>            
             )}
              
-        </AnimatePresence>
+        </>
         
         
     )

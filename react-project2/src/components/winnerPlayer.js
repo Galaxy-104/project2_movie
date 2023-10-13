@@ -15,7 +15,6 @@ function WinnerPlayer({ player, handleClick, direction, isVisible, className }){
                     onClick={handleClick}
                     key={player.id}
 
-                    LayoutGroup
                     // initial={{ opacity: 0, y: 20 }}
                     // animate={{ opacity: 1, y: 0 }}
                     // exit={{ opacity: 0, y: 20 }}

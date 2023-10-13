@@ -1,10 +1,12 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion"
 
 import Match from "../components/Match";
 import Player from "../components/Player";
 import TimeBar from "../components/Timebar";
 import WinnerPlayer from "../components/WinnerPlayer";
+import LoadingPage from "../components/LoadingPage";
 
 import '../styles/Tournament.css'
 
@@ -24,6 +26,7 @@ function Tournament(){
     const [ winnerMoviesGenre, setWinnerMoivesGenre ] = useState([])
     const [ counter, setCounter ] = useState(16)
 
+    const [ matchIndex, setMatchIndex ] = useState(0)
 
     useEffect(() => {
 
@@ -42,104 +45,76 @@ function Tournament(){
             playerList.sort(() => Math.random() - 0.5)
             setMovies([...playerList])
             setMatch([playerList[0], playerList[1]])
+            console.log("log: 로딩 완료")
         }
         
     }, [loading])
+    
+    const [ direction, setDirection ] = useState("")
 
-    const selectMovie = (e) => { 
-
-        const name = e.target.className
-        const parentName = e.target.parentElement.className
-        const grandName = e.target.parentElement.parentElement.className
-
-        setIsVisible(false)
-        setCounter(counter - 1)
-
-        if(name.includes('left') || parentName.includes('left') || grandName.includes('left')){
-            changeMatch(match[0])
-        }else if(name.includes('right') || parentName.includes('right') || grandName.includes('right')){
-            changeMatch(match[1])
-        }
+    const selectLeft = () => {
+        console.log("왼쪽 선택")
+        setDirection("left")
+        setMatchIndex(matchIndex + 2)
     }
 
-    const changeMatch = (player) => {
-        
-        if(movies.length > 2){
-            setWinners([...winners, player])
-            setMovies(movies.slice(2))
-            setMatch([movies[2], movies[3]])
-        }else if( movies.length <= 2 ){
-
-            if(winners.length === 0){
-                setWinner([player])
-                setIsVisible(true)
-
-                const filterMovies = tournamentMovies.filter((movie) => {
-                    const findMv = movie.movies.find((mv) => {
-                         if(mv.id === player.id){
-                             return mv
-                         }
-                     })
-                     return findMv !== undefined
-                })
-                // console.log(filterMovies)
-                fetch('http://127.0.0.1:5201/api/result'
-                ,{
-                    method: 'PUT',
-                    headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify({
-                        id: filterMovies[0].code
-                    })
-                })
-                setWinnerMoivesGenre([...filterMovies])
-
-            }else{
-                let updatedMovies = [...winners, player]
-                updatedMovies.sort(() => Math.random() - 0.5)
-                setMatch([updatedMovies[0], updatedMovies[1]])
-                setMovies(updatedMovies)
-                setWinners([])
-            }
-        }
+    const selectRight = () => {
+        console.log("오른쪽 선택")
+        setDirection("right")
+        setMatchIndex(matchIndex + 2)
     }
 
-    useEffect(() => {
-        setIsVisible(true)
-    }, [match])
+    if(loading){
 
-    const navigate = useNavigate()
-    const moveToResult = () => navigate('/result', { state: {winner, result: winnerMoviesGenre}})
+        return (
+            <div className="tournament-page">
+                {console.log("log: 렌더링 완료", movies)}
+                <TimeBar counter={counter}/>
+                <motion.div 
+                    className="match-container"
+                    key="match-container"
+                >
+                    {movies.length === 0? 
+                    <LoadingPage/>
+                     :
+                    <AnimatePresence exitBeforeEnter>
+                        <motion.div
+                            className="match-left"
+                            whileHover={{ scale: 1.1 }}
+                            initial={{ y: 10, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: -10, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
 
-    useEffect(() => {
-        if(winner.length === 1){
-            setTimeout(moveToResult, 1000)
-        }
+                            key={`tounament-${movies[matchIndex].id}`}
+                        >
+                            <Player player={movies[matchIndex]} handleClick={selectLeft} direction={0} isVisible={isVisible}/>
+                        </motion.div>
+                    
+                        <motion.div 
+                            className="match-right"
+                            whileHover={{ scale: 1.1}}
+                            initial={{ y: 10, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ x: -10, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            
+                            key={`tounament-${movies[matchIndex + 1].id}`}
+                        >
+                            <Player player={movies[matchIndex + 1]} handleClick={selectRight} direction={1} isVisible={isVisible}/>
+                        </motion.div>
+                    </AnimatePresence>
+                    }
+                   
+                </motion.div>
 
-    }, [winner])
-
-    return (
-        <div className="tournament-page">
+            </div>
             
-            {match.length === 0 ? "" : 
-                counter < 2 ?            
-                <div className="winner">
-                    <WinnerPlayer player={winner[0]} isVisible={true}/>
-                </div>
-                :
-                <>
-                    <TimeBar counter={counter}/>
-                    <Match 
-                        match={match} 
-                        handleClick={selectMovie}
-                        isVisible={isVisible}
-                    />    
-                </>
-                
-            }
-            
-        </div>
-        
-    )
+        )
+    }else{
+        return <LoadingPage/>
+    }
+    
 }
 
 export default Tournament
