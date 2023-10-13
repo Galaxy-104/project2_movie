@@ -65,16 +65,16 @@ function MoreGenre(){
     return setOpen(false)
   }
 
-  if(!movieLists){
-    return <div>아직 데이터 없음!</div>
+  const toTop = () => {
+    const moreGenreBox = document.querySelector('.MoreGenre')
+    moreGenreBox.scrollTo({top:0, behavior:"smooth"})
   }
-
-
   //스크롤
   let num = 20
   
   const scrolling = () => {
     const MoreGenreBox = document.querySelector('.MoreGenre')
+    const toTopBtn = document.querySelector('.toTop')
     if(MoreGenreBox.scrollTop + MoreGenreBox.clientHeight === MoreGenreBox.scrollHeight){
       const plusList = (offSet) => {
         return movieLists.slice(offSet, offSet+num)
@@ -86,18 +86,25 @@ function MoreGenre(){
 
       // console.log(moreMovieList)
       
-
       
     }
+
+    // 위로가는 버튼 보이기
+    MoreGenreBox.scrollTop > 400 ? toTopBtn.classList.add('btnOpen') : toTopBtn.classList.remove('btnOpen')
   }
 
 
   return(
     <div className={`MoreGenre`}  onScroll={scrolling}>
       <Nav></Nav>
-      <h3 className="maintitle">{location.state.title}</h3>
+      <h3 className="maintitle" >{location.state.title}</h3>
       <Movies movieLists={moreMovieList} pickPoster={pickPoster}></Movies>
       <Modal type='poster' open={open} pickMovie={pickMovie} close={close} size='posterSize' likeMovieList={likeMovieList}></Modal>
+      <Button btnClass='toTop' handleClick={toTop}>
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+        <path d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"/>
+      </svg>
+      </Button>
     </div>
   )
 }
