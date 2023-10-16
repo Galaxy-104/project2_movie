@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAsyncError, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion"
 
 import Match from "../components/Match";
@@ -51,18 +51,35 @@ function Tournament(){
     }, [loading])
     
     const [ direction, setDirection ] = useState("")
+    const [ isSelected, setIsSelected ] = useState(false)
+    const [ round, setRound ] = useState(16)
+    const [ quarter, setQuarter ] = useState([])
 
     const selectLeft = () => {
         console.log("왼쪽 선택")
         setDirection("left")
-        setMatchIndex(matchIndex + 2)
+        setIsSelected(true)
+        setRound(round - 1)        
     }
 
     const selectRight = () => {
         console.log("오른쪽 선택")
         setDirection("right")
-        setMatchIndex(matchIndex + 2)
+        setIsSelected(true)
+        setRound(round - 1)    
     }
+
+    useEffect(() => {
+
+        if(isSelected){
+            setMatchIndex(matchIndex + 2)
+        }
+
+    }, [isSelected])
+
+    useEffect(() => {
+        setIsSelected(false)
+    }, [matchIndex])
 
     if(loading){
 
@@ -80,11 +97,15 @@ function Tournament(){
                     <AnimatePresence exitBeforeEnter>
                         <motion.div
                             className="match-left"
-                            whileHover={{ scale: 1.1 }}
-                            initial={{ y: 10, opacity: 0 }}
+                            whileHover={isSelected? "" : { scale: 1.1 }}
+                            initial={isSelected? "" :{ y: 10, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            exit={{ y: -10, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
+                            exit={isSelected? 
+                                direction === "left"?
+                                { x: 400, opacity: 1, scale: 1.1 } : { y: 50, opacity: 0, scale: 0.9 } : 
+                                ""
+                            }
+                            transition={isSelected && direction === "left"? { duration: 1 } : { duration: 0.4 }}
 
                             key={`tounament-${movies[matchIndex].id}`}
                         >
@@ -93,11 +114,15 @@ function Tournament(){
                     
                         <motion.div 
                             className="match-right"
-                            whileHover={{ scale: 1.1}}
-                            initial={{ y: 10, opacity: 0 }}
+                            whileHover={isSelected? "" : { scale: 1.1}}
+                            initial={isSelected? "" : { y: 10, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            exit={{ x: -10, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
+                            exit={isSelected?
+                                direction === "right"?
+                                { x: -400, opacity: 1, scale: 1.1 } : { y: 50, opacity: 0, scale: 0.9 } :
+                                ""
+                            }
+                            transition={isSelected && direction === "right"? { duration: 1 } : { duration: 0.4 }}
                             
                             key={`tounament-${movies[matchIndex + 1].id}`}
                         >
