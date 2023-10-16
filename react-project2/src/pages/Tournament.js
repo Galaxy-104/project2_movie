@@ -49,7 +49,7 @@ function Tournament(){
         }
         
     }, [loading])
-    
+
     const [ direction, setDirection ] = useState("")
     const [ isSelected, setIsSelected ] = useState(false)
     const [ round, setRound ] = useState(16)
@@ -66,7 +66,7 @@ function Tournament(){
         console.log("오른쪽 선택")
         setDirection("right")
         setIsSelected(true)
-        setRound(round - 1)    
+        setRound(round - 1)
     }
 
     useEffect(() => {
