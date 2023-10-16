@@ -45,7 +45,7 @@ function Tournament(){
             playerList.sort(() => Math.random() - 0.5)
             setMovies([...playerList])
             setMatch([playerList[0], playerList[1]])
-            console.log("log: 로딩 완료")
+            // console.log("log: 로딩 완료")
         }
         
     }, [loading])
@@ -61,14 +61,14 @@ function Tournament(){
     const [ isFinal, setIsFinal ] = useState(false)
 
     const selectLeft = () => {
-        console.log("왼쪽 선택")
+        // console.log("왼쪽 선택")
         setDirection("left")
         setIsSelected(true)
         setCounter(counter - 1)
     }
 
     const selectRight = () => {
-        console.log("오른쪽 선택")
+        // console.log("오른쪽 선택")
         setDirection("right")
         setIsSelected(true)
         setCounter(counter - 1)
@@ -174,7 +174,7 @@ function Tournament(){
                 {winner.length === 1?
                     <WinnerPlayer player={winner[0]}/> :
                 <>  
-                    {console.log(counter, matchIndex)}
+                    {/* {console.log(counter, matchIndex)} */}
                     <TimeBar counter={counter}/>
                     <motion.div 
                         className="match-container"
