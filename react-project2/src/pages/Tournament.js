@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { useAsyncError, useInRouterContext, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion"
+import { useMediaQuery } from "react-responsive"
 
 import Match from "../components/Match";
 import Player from "../components/Player";
@@ -9,11 +10,20 @@ import WinnerPlayer from "../components/WinnerPlayer";
 import LoadingPage from "../components/LoadingPage";
 
 import '../styles/Tournament.css'
+import Logo from "../assets/logo.png"
 
 const tournamentMovies = []
 const playerList = []
 
 function Tournament(){
+
+    
+    const isDesktop = useMediaQuery({ query: "(min-width: 1001px)" })
+    const isTablet = useMediaQuery({ query: "(max-width: 1000px)" && "(min-width: 420px)" })
+    const isSmallTablet = useMediaQuery({ query: "(max-width: 819px)" })
+    const isMobile = useMediaQuery({ query: "(max-width: 419px)" && "(min-width: 281px)" })
+    const isSmallMobile = useMediaQuery({ query: "(max-width: 380px)" })
+    const isFold = useMediaQuery({ query: "(max-width: 280px)" })
 
     const [ loading, setLoading ] = useState(false)
     const [ isVisible, setIsVisible ] = useState(true)
@@ -167,69 +177,215 @@ function Tournament(){
         }
     }, [winnerMoviesGenre])
 
-    if(loading){
-
-        return (
-            <div className="tournament-page">
-                {winner.length === 1?
-                    <WinnerPlayer player={winner[0]}/> :
-                <>  
-                    {/* {console.log(counter, matchIndex)} */}
-                    <TimeBar counter={counter}/>
-                    <motion.div 
-                        className="match-container"
-                        key="match-container"
-                    >
-                        {movies.length === 0? 
-                        <LoadingPage/>
-                        :
-                        <AnimatePresence exitBeforeEnter>
-                            {console.log(match)}
-                            <motion.div
-                                className="match-left"
-                                whileHover={isSelected? "" : { scale: 1.1 }}
-                                initial={isSelected? "" :{ y: 10, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                exit={isSelected? 
-                                    direction === "left"?
-                                    { x: 400, opacity: 1, scale: 1.1 } : { y: 50, opacity: 0, scale: 0.9 } : 
-                                    ""
-                                }
-                                transition={isSelected && direction === "left"? { duration: 1 } : { duration: 0.4 }}
-
-                                key={`tounament-${movies[matchIndex].id}`}
-                            >
-                                <Player player={movies[matchIndex]} handleClick={selectLeft} direction={0} isVisible={isVisible}/>
-                            </motion.div>
-                        
-                            <motion.div 
-                                className="match-right"
-                                whileHover={isSelected? "" : { scale: 1.1}}
-                                initial={isSelected? "" : { y: 10, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                exit={isSelected?
-                                    direction === "right"?
-                                    { x: -400, opacity: 1, scale: 1.1 } : { y: 50, opacity: 0, scale: 0.9 } :
-                                    ""
-                                }
-                                transition={isSelected && direction === "right"? { duration: 1 } : { duration: 0.4 }}
-                                
-                                key={`tounament-${movies[matchIndex + 1].id}`}
-                            >
-                                <Player player={movies[matchIndex + 1]} handleClick={selectRight} direction={1} isVisible={isVisible}/>
-                            </motion.div>
-                        </AnimatePresence>
-                        }
-                    
-                    </motion.div>
-                </>
-            }   
-            </div>
-            
-        )
-    }else{
-        return <LoadingPage/>
+    const gohome = () => {
+        navigate('/login')
+        // navigate('/home', {state: {genres: winner[0].genre_ids}})
     }
+
+    if(isDesktop){
+        if(loading){
+            return (
+                <div className="tournament-page">
+                    {winner.length === 1?
+                        <WinnerPlayer player={winner[0]}/> :
+                    <>  
+                        {/* {console.log(counter, matchIndex)} */}
+                        <TimeBar counter={counter}/>
+                        <motion.div 
+                            className="match-container"
+                            key="match-container"
+                        >
+                            {movies.length === 0? 
+                            <LoadingPage/>
+                            :
+                            <AnimatePresence exitBeforeEnter>
+                                {console.log(match)}
+                                <motion.div
+                                    className="match-left"
+                                    whileHover={isSelected? "" : { scale: 1.1 }}
+                                    initial={isSelected? "" :{ y: 10, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={isSelected? 
+                                        direction === "left"?
+                                        { x: 400, opacity: 1, scale: 1.1 } : { y: 50, opacity: 0, scale: 0.9 } : 
+                                        ""
+                                    }
+                                    transition={isSelected && direction === "left"? { duration: 1 } : { duration: 0.4 }}
+
+                                    key={`tounament-${movies[matchIndex].id}`}
+                                >
+                                    <Player player={movies[matchIndex]} handleClick={selectLeft} direction={0} isVisible={isVisible}/>
+                                </motion.div>
+                            
+                                <motion.div 
+                                    className="match-right"
+                                    whileHover={isSelected? "" : { scale: 1.1}}
+                                    initial={isSelected? "" : { y: 10, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={isSelected?
+                                        direction === "right"?
+                                        { x: -400, opacity: 1, scale: 1.1 } : { y: 50, opacity: 0, scale: 0.9 } :
+                                        ""
+                                    }
+                                    transition={isSelected && direction === "right"? { duration: 1 } : { duration: 0.4 }}
+                                    
+                                    key={`tounament-${movies[matchIndex + 1].id}`}
+                                >
+                                    <Player player={movies[matchIndex + 1]} handleClick={selectRight} direction={1} isVisible={isVisible}/>
+                                </motion.div>
+                            </AnimatePresence>
+                            }
+                        
+                        </motion.div>
+                    </>
+                }   
+                </div>
+                
+            )
+        }else{
+            return <LoadingPage/>
+        }
+    }else if(isTablet){
+        if(loading){
+            return (
+                <div className={`tablet-tournament-page ${isSmallTablet? "small" : ""}`}>
+                    {winner.length === 1?
+                        <WinnerPlayer player={winner[0]}/> :
+                    <>  
+                        {/* {console.log(counter, matchIndex)} */}
+                        <TimeBar counter={counter}/>
+                        <motion.div 
+                            className="match-container"
+                            key="match-container"
+                        >
+                            {movies.length === 0? 
+                            <LoadingPage/>
+                            :
+                            <AnimatePresence exitBeforeEnter>
+                                {console.log(match)}
+                                <motion.div
+                                    className="match-left"
+                                    whileHover={isSelected? "" : { scale: 1.1 }}
+                                    initial={isSelected? "" :{ y: 10, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={isSelected? 
+                                        direction === "left"?
+                                        { opacity: 1, scale: 1.1 } : { y: 50, opacity: 0, scale: 0.9 } : 
+                                        ""
+                                    }
+                                    transition={{ duration: 0.4 }}
+
+                                    key={`tounament-${movies[matchIndex].id}`}
+                                >
+                                    <Player player={movies[matchIndex]} handleClick={selectLeft} direction={0} isVisible={isVisible}/>
+                                </motion.div>
+                            
+                                <motion.div 
+                                    className="match-right"
+                                    whileHover={isSelected? "" : { scale: 1.1}}
+                                    initial={isSelected? "" : { y: 10, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={isSelected?
+                                        direction === "right"?
+                                        { opacity: 1, scale: 1.1 } : { y: 50, opacity: 0, scale: 0.9 } :
+                                        ""
+                                    }
+                                    transition={{ duration: 0.4 }}
+                                    
+                                    key={`tounament-${movies[matchIndex + 1].id}`}
+                                >
+                                    <Player player={movies[matchIndex + 1]} handleClick={selectRight} direction={1} isVisible={isVisible}/>
+                                </motion.div>
+                            </AnimatePresence>
+                            }
+                            
+                        </motion.div>
+                        
+                        <motion.div className="move-to-login">
+                            <motion.button className="mood-join-btn" onClick={gohome}>
+                                <img src={Logo} alt="logo"/>
+                            </motion.button>
+                        </motion.div>
+                    </>
+                }   
+                </div>
+                
+            )
+        }else{
+            return <LoadingPage/>
+        }
+    }else if(isMobile){
+        if(loading){
+            return (
+                <div className={`mobile-tournament-page ${isSmallMobile? "small" : ""}`}>
+                    {winner.length === 1?
+                        <WinnerPlayer player={winner[0]}/> :
+                    <>  
+                        {/* {console.log(counter, matchIndex)} */}
+                        <TimeBar counter={counter}/>
+                        <motion.div 
+                            className="match-container"
+                            key="match-container"
+                        >
+                            {movies.length === 0? 
+                            <LoadingPage/>
+                            :
+                            <AnimatePresence exitBeforeEnter>
+                                {console.log(match)}
+                                <motion.div
+                                    className="match-left"
+                                    whileHover={isSelected? "" : { scale: 1.1 }}
+                                    initial={isSelected? "" :{ y: 10, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={isSelected? 
+                                        direction === "left"?
+                                        { opacity: 1, scale: 1.1 } : { y: 50, opacity: 0, scale: 0.9 } : 
+                                        ""
+                                    }
+                                    transition={{ duration: 0.4 }}
+
+                                    key={`tounament-${movies[matchIndex].id}`}
+                                >
+                                    <Player player={movies[matchIndex]} handleClick={selectLeft} direction={0} isVisible={isVisible}/>
+                                </motion.div>
+                            
+                                <motion.div 
+                                    className="match-right"
+                                    whileHover={isSelected? "" : { scale: 1.1}}
+                                    initial={isSelected? "" : { y: 10, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={isSelected?
+                                        direction === "right"?
+                                        { opacity: 1, scale: 1.1 } : { y: 50, opacity: 0, scale: 0.9 } :
+                                        ""
+                                    }
+                                    transition={{ duration: 0.4 }}
+                                    
+                                    key={`tounament-${movies[matchIndex + 1].id}`}
+                                >
+                                    <Player player={movies[matchIndex + 1]} handleClick={selectRight} direction={1} isVisible={isVisible}/>
+                                </motion.div>
+                            </AnimatePresence>
+                            }
+                            
+                        </motion.div>
+                        
+                        <motion.div className="move-to-login">
+                            <motion.button className="mood-join-btn" onClick={gohome}>
+                                <img src={Logo} alt="logo"/>
+                            </motion.button>
+                        </motion.div>
+                    </>
+                }   
+                </div>
+                
+            )
+        }else{
+            return <LoadingPage/>
+        }
+    }
+    
+    
     
 }
 
