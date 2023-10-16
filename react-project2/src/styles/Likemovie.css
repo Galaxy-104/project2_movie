@@ -57,3 +57,74 @@
   /* text-shadow: 0 0 5px var(--main-color); */
   font-weight: bold;
 }
+
+@media (max-width: 1000px){
+  .like-list{
+    height: 103px;
+  }
+}
+@media (max-width: 800px){
+  .like-info{
+    margin: 1rem;
+  }
+}
+@media (max-width: 420px){
+  .like-box{
+    flex-direction: column;
+    align-items: center;
+  }
+  .like-list-box{
+    display: flex;
+    margin: .7rem;
+    width: 95%;
+    height: 135px;
+
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+  .like-list{
+    flex-direction: column;
+    height: 145px;
+  }
+  .like-list .img-box{
+    height: 80%;
+  }
+  .like-list h4{
+    height: 10%;
+    font-size: .9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 .15rem;
+  }
+  .like-info{
+    padding: 1rem;
+  }
+  .like-info h2{
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 380px){
+  .like-info p{
+    font-size: .9rem;
+  }
+}
+@media (max-width: 280px){
+  .like-list{
+    height: 110px;
+  }
+  .like-list .img-box{
+    height: 75%;
+  }
+  .like-list h4{
+    font-size: .75rem ;
+  }
+  .like-info h2{
+    font-size: 1.2rem;
+  }
+  .like-info h4{
+    font-size: .9rem;
+  }
+  .like-info p{
+    font-size: .8rem;
+  }
+}

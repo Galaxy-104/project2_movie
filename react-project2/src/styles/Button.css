@@ -88,3 +88,29 @@
 .btnOpen{
   display: block;
 }
+
+@media (max-width: 420px){
+  .moreBtn{
+    border-radius: 10px;
+    height: auto;
+    min-height: auto;
+    position: absolute;
+    left: 1.5rem;
+  }
+}
+@media (max-width: 380px){
+  .unLikeBtn{
+    scale: .9;
+  }
+}
+@media (max-width: 280px){
+  .moreBtn{
+    scale: .7;
+    left: 1rem;
+  }
+  .closeBtn{
+    scale: 1;
+    top: -4px;
+    right: -2px;
+  }
+}

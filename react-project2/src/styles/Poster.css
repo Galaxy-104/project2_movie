@@ -26,5 +26,20 @@
   padding: 1px;
 }
 
-/* 사이즈 정의 */
-
+@media (max-width: 420px){
+  .img-box{
+    width: 100px;
+  }
+  .Poster{
+    /* margin-right: 0; */
+    width: auto;
+  }
+}
+@media (max-width: 280px){
+  .img-box{
+    width: 60px;
+  }
+  .Poster{
+    margin-right: 5px;
+  }
+}

@@ -47,3 +47,20 @@
   fill: var(--main-color)
 
 }
+
+@media (max-width: 380px){
+  .maintitle{
+    font-size: 2rem;
+  }
+  .toTop {
+    scale: .8;
+  }
+}
+@media (max-width: 280px){
+  .maintitle{
+    font-size: 1.5rem;
+  }
+  .toTop {
+    scale: .8;
+  }
+}
