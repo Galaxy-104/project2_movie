@@ -81,3 +81,194 @@ svg text{
     transform-origin: 0 32%;
     transform: rotate(10deg);
 }
+
+/* 태블릿 스타일 */
+.tablet-main-page{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: url('https://i.ibb.co/vXqDmnh/background.jpg') center no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tablet-main-page .main-container{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* 홈페이지로 이동하는 버튼 */
+.tablet-main-page .move-to-login{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+    margin-top: 3rem;
+}
+.tablet-main-page .move-to-login .mood-join-msg{
+    text-align: right;
+    font-size: 0.8rem;
+    margin: 0;
+    letter-spacing: 1px;
+    text-shadow: none;
+    color: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    left: -12.5rem;
+}
+.tablet-main-page .move-to-login .mood-join-btn{
+    background: none;
+    width: 16rem;
+    height: 4rem;
+    transition: .5s;
+    border: none;
+    cursor: pointer;
+}
+.tablet-main-page .move-to-login .mood-join-btn img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    object-position: center;
+}
+
+/* 토너먼트 이동 */
+
+.tablet-main-page .main-container .move-to-tournament{
+    display: flex;
+    flex-direction: column;
+}
+.tablet-main-page .main-text{
+    justify-content: end;
+}
+
+.tablet-main-page svg text{
+    font-size: 4rem;
+    font-family: 'Black Ops One', cursive;
+    stroke-dasharray: 150;
+    stroke: #fff;
+    stroke-width: 1px;
+}
+
+.tablet-main-page .clapperboard-container{
+    justify-content: start;
+    position: relative;
+}
+.tablet-main-page .clapperboard-container .tournament-start-msg{
+    font-family: 'Black Ops One', cursive;
+    color: #fff;
+    position: absolute;
+    font-size: 4rem;
+    bottom: 120px;
+    left: 140px;
+}
+.tablet-main-page .clapperboard-container svg{
+    cursor: pointer;
+}
+.tablet-main-page #clapperboard:hover #clapperboard-upper{
+    transform-origin: 0 32%;
+    transform: rotate(10deg);
+}
+
+/* 스마트폰 스타일 */
+.mobile-main-page{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: url('https://i.ibb.co/vXqDmnh/background.jpg') center no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mobile-main-page .main-container{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* 홈페이지로 이동하는 버튼 */
+.mobile-main-page .move-to-login{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+    margin-top: 3rem;
+}
+.mobile-main-page .move-to-login .mood-join-msg{
+    text-align: right;
+    font-size: 0.8rem;
+    margin: 0;
+    letter-spacing: 1px;
+    text-shadow: none;
+    color: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    bottom: -1.5rem;
+}
+.mobile-main-page .move-to-login .mood-join-msg svg{
+    transform: rotate(-90deg);
+}
+.mobile-main-page .move-to-login .mood-join-btn{
+    background: none;
+    width: 16rem;
+    height: 4rem;
+    transition: .5s;
+    border: none;
+    cursor: pointer;
+}
+.mobile-main-page .move-to-login .mood-join-btn img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    object-position: center;
+}
+
+/* 토너먼트 이동 */
+
+.mobile-main-page .main-container .move-to-tournament{
+    display: flex;
+    flex-direction: column;
+}
+.mobile-main-page .main-text{
+    justify-content: end;
+}
+
+.mobile-main-page svg text{
+    font-size: 4rem;
+    font-family: 'Black Ops One', cursive;
+    stroke-dasharray: 150;
+    stroke: #fff;
+    stroke-width: 1px;
+}
+
+.mobile-main-page .clapperboard-container{
+    justify-content: start;
+    position: relative;
+}
+.mobile-main-page .clapperboard-container .tournament-start-msg{
+    font-family: 'Black Ops One', cursive;
+    color: #fff;
+    position: absolute;
+    font-size: 3rem;
+    bottom: 60px;
+    left: 65px;
+}
+.mobile-main-page .clapperboard-container svg{
+    cursor: pointer;
+}
+.mobile-main-page #clapperboard:hover #clapperboard-upper{
+    transform-origin: 0 32%;
+    transform: rotate(10deg);
+}
