@@ -10,10 +10,49 @@
   width: 100%;
   background-color: var(--bg-color);
   overflow: auto;
+
+}
+.MoreGenre::-webkit-scrollbar{
+  display: none;
 }
 
 .maintitle{
+  margin: 0;
   margin-top: 5rem;
   font-size: 3rem;
   text-align: center;
+  /* position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  background-color: var(--bg-color);
+  padding: 0 2rem;
+  z-index: 2;
+  border-radius: 10px; */
+}
+/* .maintitle:hover{
+  box-shadow: 0 0 10px var(--main-color);
+  text-shadow: none;
+} */
+
+.toTop svg {
+  fill: white
+}
+.toTop:hover{
+  background-color: var(--bg-color);
+  box-shadow: 0 0 5px var(--main-color);
+}
+
+.toTop:hover svg{
+  fill: var(--main-color)
+
+}
+
+@media (max-width: 380px){
+  .maintitle{
+    font-size: 2rem;
+  }
+  .toTop {
+    scale: .8;
+  }
 }

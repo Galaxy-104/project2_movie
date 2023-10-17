@@ -17,3 +17,24 @@
 .ScrollMovie::-webkit-scrollbar{
   display: none;
 }
+
+@media (max-width: 1000px){
+  .ScrollMovie{
+    width: 84%;
+    margin-left: 1.5rem;
+  }
+}
+@media (max-width: 420px){
+  .ScrollMovie{
+    width: 95%;
+    margin-left: 0.5rem;
+    height: 157px;
+  }
+}
+@media (max-width: 280px){
+  .ScrollMovie{
+    width: 95%;
+    height: 95px;
+    margin: .5rem;
+  }
+}

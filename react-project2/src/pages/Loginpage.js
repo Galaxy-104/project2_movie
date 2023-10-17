@@ -26,13 +26,15 @@ function Loginpage(){
     
   //form화면으로 슬라이드
   const gofrom = () => {
-    window.scrollTo({top:950, behavior:"smooth"})
+    const form = document.querySelector('.form')
+    window.scrollTo({top:document.body.scrollHeight, behavior:"smooth"})
+    form.classList.add('show')
   }
   
   const location = useLocation()
   console.log(location)
   const [genreLists, setGenreLists] = useState(location.state && location.state.genres)
-    
+  
  
 
   return(

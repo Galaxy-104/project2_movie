@@ -57,7 +57,7 @@ function Homepage(){
       .then( result => {
         console.log(result)
         setUsersGenre(result.user.likeGenre)
-        setLikeMovieList(result.user.likeMoive)
+        setLikeMovieList(result.user.likeMovie)
       })
       console.log(likeMovieList)
     }, [])
@@ -116,18 +116,15 @@ function Homepage(){
         filterMovie.filtered.map(movie => {
           // console.log(`https://image.tmdb.org/t/p/original/${movie.poster_path}` === e.target.src)
           if(`https://image.tmdb.org/t/p/original/${movie.poster_path}` === e.target.src){
-            console.log(movie)
+            // console.log(movie)
             return setPickMovie(movie)
           }
         })
       })}
-      // console.log(pickMovie)
+      console.log(pickMovie)
       return setOpen(true)
     }
 
-    useEffect(() => {
-      console.log(pickMovie)
-    }, [pickMovie])
 
     if(loading){
       //로딩화면

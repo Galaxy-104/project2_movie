@@ -22,3 +22,38 @@
   height: 45px;
   margin-right: 15px;
 }
+
+@media (max-width: 420px){
+  .pickPoster{
+    width: 95%;
+  }
+  .movies{
+    height: auto;
+  }
+}
+
+@media (max-width: 380px){
+  .maintitle{
+    font-size: 2rem;
+  }
+  .movies{
+    width: 166px;
+  }
+}
+@media (max-width: 280px){
+  .maintitle{
+    font-size: 1.5rem;
+    margin-top: 4rem;
+  }
+  .toTop {
+    scale: .6;
+    bottom: 3%;
+  }
+  .movies{
+    width: 117px;
+  }
+  .movies h2{
+    font-size: .8rem;
+    margin-right: 0;
+  }
+}
