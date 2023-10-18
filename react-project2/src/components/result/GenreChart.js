@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import ApexCharts from "react-apexcharts"
 
-import '../styles/GenreChart.css'
+import '../../styles/GenreChart.css'
 
 function GenreChart({ dataArr }){
     const [ labels, setLabels ] = useState([])

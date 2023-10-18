@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Nav from "../components/Nav";
 import { FiUser } from "react-icons/fi"
+
+import Nav from "../components/common/Nav";
 
 import '../styles/Account.css'
 

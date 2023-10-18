@@ -1,8 +1,8 @@
 import React from "react"
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 
-import genres from "../api/Genres"
-import '../styles/Player.css'
+import genres from "../../api/Genres"
+import '../../styles/Player.css'
 
 function Player({ player, handleClick, direction, isVisible, className }){
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import '../styles/Likemovie.css'
-import Nav from '../components/Nav'
+import Nav from '../components/common/Nav'
 import Genres from '../api/Genres.json'
 import YouTube from 'react-youtube'
-import Modal from "../components/Modal";
-import Button from "../components/Button";
+import Modal from "../components/common/Modal";
+import Button from "../components/common/Button";
 import { motion } from "framer-motion"
 
 function Likemovie(){

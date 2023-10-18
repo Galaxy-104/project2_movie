@@ -3,11 +3,11 @@ import { useAsyncError, useInRouterContext, useNavigate } from "react-router-dom
 import { motion, AnimatePresence } from "framer-motion"
 import { useMediaQuery } from "react-responsive"
 
-import Match from "../components/Match";
-import Player from "../components/Player";
-import TimeBar from "../components/Timebar";
-import WinnerPlayer from "../components/WinnerPlayer";
-import LoadingPage from "../components/LoadingPage";
+import Match from "../components/tournament/Match";
+import Player from "../components/tournament/Player";
+import TimeBar from "../components/tournament/Timebar";
+import WinnerPlayer from "../components/result/WinnerPlayer";
+import LoadingPage from "../components/common/LoadingPage";
 
 import '../styles/Tournament.css'
 import Logo from "../assets/logo.png"

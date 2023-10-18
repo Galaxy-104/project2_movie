@@ -1,8 +1,8 @@
 import React, { Component,useEffect,useState } from "react";
-import Button from "./Button";
+import Button from "./Button"
 import YouTube from 'react-youtube'
-import '../styles/Modal.css'
-import Genres from '../api/Genres.json'
+import '../../styles/Modal.css'
+import Genres from '../../api/Genres.json'
 
 function Modal ({children, open, type, close, pickMovie, size, likeMovieList }){
 

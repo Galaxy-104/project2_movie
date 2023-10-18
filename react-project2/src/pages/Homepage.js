@@ -2,12 +2,12 @@ import React,{ useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"
 import '../styles/Homepage.css'
-import Nav from '../components/Nav'
-import ScrollMoive from "../components/ScrollMovie";
-import Button from "../components/Button";
-import Modal from "../components/Modal";
+import Nav from '../components/common/Nav'
+import ScrollMoive from "../components/home/ScrollMovie";
+import Button from "../components/common/Button";
+import Modal from "../components/common/Modal";
 import Genres from '../api/Genres.json'
-import LoadingPage from "../components/LoadingPage";
+import LoadingPage from "../components/common/LoadingPage";
 
 
 function Homepage(){

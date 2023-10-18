@@ -1,9 +1,9 @@
 import React,{ useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 import '../styles/Loginpage.css'
 import logo from '../assets/logo.png'
-import Form from "../components/Form";
+import Form from "../components/common/Form";
 
 function Loginpage(){
 

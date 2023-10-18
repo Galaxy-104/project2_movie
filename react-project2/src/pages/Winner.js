@@ -4,8 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { BiRightArrowAlt } from "react-icons/bi"
 import { motion } from "framer-motion"
 
-import GenreChart from "../components/GenreChart";
-import WinnerPlayer from "../components/WinnerPlayer"
+import GenreChart from "../components/result/GenreChart";
+import WinnerPlayer from "../components/result/WinnerPlayer"
 
 import '../styles/Winner.css'
 import Logo from "../assets/logo.png"

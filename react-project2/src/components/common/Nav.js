@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "./Button";
-import '../styles/Nav.css'
-import logo from '../assets/logo.png'
+import Button from "./Button"
+import '../../styles/Nav.css'
+import logo from '../../assets/logo.png'
 
 function Nav(){
   

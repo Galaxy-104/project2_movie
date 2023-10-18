@@ -1,8 +1,8 @@
 import React from "react"
 import { motion, AnimatePresence } from 'framer-motion'
-import { ReactComponent as Champion } from "../assets/winner.svg"
+import { ReactComponent as Champion } from "../../assets/winner.svg"
 
-import '../styles/Player.css'
+import '../../styles/Player.css'
 
 function WinnerPlayer({ player, handleClick, direction, isVisible, className }){
     console.log(player)

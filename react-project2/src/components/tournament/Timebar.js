@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import '../styles/TimeBar.css'
+import '../../styles/TimeBar.css'
 
 function TimeBar({ counter }){
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "./Button";
-import '../styles/Form.css'
-import Genres from '../api/Genres.json'
+import Button from "./Button"
+import '../../styles/Form.css'
+import Genres from '../../api/Genres.json'
 import Modal from './Modal'
 
 

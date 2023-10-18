@@ -1,7 +1,7 @@
 import React,{ Component } from "react";
-import '../styles/ScrollMovie.css'
-import Poster from "./Poster";
-import Button from "./Button";
+import '../../styles/ScrollMovie.css'
+import Poster from "../common/Poster";
+import Button from "../common/Button"
 
 function ScrollMoive({pickPoster, movies}){
   // console.log(movies)

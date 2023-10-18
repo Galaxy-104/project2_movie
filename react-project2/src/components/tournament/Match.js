@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion"
 
 import Player from "./Player";
-import '../styles/Match.css'
+import '../../styles/Match.css'
 
 function Match({ match, handleClick, isVisible, isMatch }){
 
