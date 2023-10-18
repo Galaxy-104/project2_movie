@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Genres from '../api/Genres.json'
+import Genres from '../../api/Genres.json'
 
 function AccountGenres({ handleClick, userInfo }){
 

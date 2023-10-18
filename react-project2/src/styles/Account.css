@@ -10,6 +10,65 @@
     justify-content: center;
     align-items: center;
 }
-.account-page .user-account > div{
-    border: 1px solid #909090;
+.account-page .account-container > div {
+    border: 1px solid var(--line-color);
+    width: 672px; height: 562px;
+    border-radius: 15px;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+  
+    overflow: hidden;
+}
+
+.account-page .account-container .account-profile div.user-email{
+    display: flex;
+    justify-content: center;
+}
+.account-page .account-container .account-profile div.user-email div.email-icon{
+    padding-top: 13px;
+    padding-right: 2px;
+}
+.account-page .account-container .account-profile span.user-email{
+    display: inline-block;
+    width: 300px;
+    height: 40px;
+    position: relative;
+    text-align: left;
+    border-radius: 40px;
+    border: 1px solid #333;
+    padding-left: 16px;
+    padding-top: 10px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+.account-page .account-container .account-profile .user-password-container{
+    display: flex;
+    flex-direction: column;
+}
+.account-page .account-container .account-profile label{
+    position: relative;
+}
+.account-page .account-container .account-profile label span{
+    position: absolute;
+    top: 20px;
+    left: 47px;
+    transition: .3s;
+}
+.account-page .account-container .account-profile label.user-password-check svg{
+    opacity: 0;
+}
+
+.account-page .account-container .account-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+.account-page .account-container .account-profile label span.focus{
+    top: 6px;
+    font-size: .7rem;
 }
