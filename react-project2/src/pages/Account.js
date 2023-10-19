@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FiUser } from "react-icons/fi"
+import { motion, AnimatePresence } from "framer-motion"
 
 import Nav from "../components/common/Nav";
 import Button from "../components/common/Button";
@@ -7,11 +7,14 @@ import AccountProfile from "../components/account/AccountProfile";
 import AccountGenres from "../components/account/AccountGenres"
 
 import '../styles/Account.css'
+
 import { BiTrim } from "react-icons/bi";
+import { FiUser } from "react-icons/fi"
 
 function Account(){
 
     const [ userInfo, setUserInfo ] = useState({})
+    const [ loading, setLoading ] = useState(false)
     
     useEffect(() => {
         fetch('http://localhost:5201/api/users/check', 
@@ -27,6 +30,7 @@ function Account(){
         .then( result => {
             console.log(result)
             setUserInfo(result.user)
+            setLoading(true)
         })
 
     }, [])
@@ -97,29 +101,40 @@ function Account(){
         setIsMovePage(true)
     }
 
+    const accountVariants = {
+        Hidden: {
+            x: currentPage === "profile"? -672 : 0
+        },
+        visible: {
+            x: currentPage === "profile"? 0 : -672
+        }
+    }
+
     return (
         <div className="account-page">
             <Nav></Nav>
             <div className="account-container">
-                {currentPage === "profile"? 
-                <div className="account-profile">
-                    <AccountProfile userInfo={userInfo} handleChange={passwordErrorLabel}/>
-                    <div className="account-btn-container">
-                       <Button handleClick={changePage}>다음</Button> 
+                <motion.div 
+                    className="account-wrapper"
+                    variants={accountVariants}
+                    initial={!loading? false : "Hidden"}
+                    animate={"visible"}
+                    transition={{ duration: 0.5 }}
+                >
+                    <div className={`account-profile`}>   
+                        <AccountProfile userInfo={userInfo} handleChange={passwordErrorLabel}/>
+                        <div className="account-btn-container">
+                            <Button handleClick={changePage}>다음</Button> 
+                        </div>
+                    </div> 
+                    <div className={`account-genres`}>
+                        <AccountGenres userInfo={userInfo}/>
+                        <div className="account-btn-container">
+                            <Button handleClick={changePage}>이전</Button>
+                            <Button>수정하기</Button>
+                        </div>
                     </div>
-                    
-                </div> :
-                currentPage === "genres"?
-                <div className="account-genres">
-                    <AccountGenres userInfo={userInfo}/>
-                    <div className="account-btn-container">
-                       <Button handleClick={changePage}>이전</Button>
-                       <Button>수정하기</Button>
-                    </div>
-                </div> 
-                : ""
-                }
-
+                </motion.div>
             </div>
         </div>
     )

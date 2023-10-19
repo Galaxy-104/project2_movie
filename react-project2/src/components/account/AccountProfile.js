@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect, useState } from "react";
 
 import { FiUser, FiMail } from "react-icons/fi"
 import { BiSolidLock } from "react-icons/bi"
@@ -11,6 +11,7 @@ function AccountProfile({ handleChange, userInfo }){
 
     useEffect(() => {
         if(userInfo.userId !== undefined){
+
             const idInput = document.querySelector('.account-page input#user-id')
             idInput.value = userInfo.userId
         }

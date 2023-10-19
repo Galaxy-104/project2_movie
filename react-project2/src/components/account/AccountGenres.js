@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Genres from '../../api/Genres.json'
 
 function AccountGenres({ handleClick, userInfo }){
@@ -7,6 +7,7 @@ function AccountGenres({ handleClick, userInfo }){
         
         if(userInfo.likeGenre !== undefined){
             // console.log(userInfo.likeGenre)
+
             const genreCheckBoxes = document.querySelectorAll('.account-page .inputs input')
             genreCheckBoxes.forEach((checkBox) => {
                 if(userInfo.likeGenre.includes(checkBox.value)){
@@ -16,7 +17,7 @@ function AccountGenres({ handleClick, userInfo }){
         }
        
     }, [userInfo])
-
+    
     return (
         <div className="user-likes">
             <h4>좋아하는 장르를 3개 이상 선택해주세요!</h4>
