@@ -58,7 +58,7 @@
   font-weight: bold;
 }
 
-@media (max-width: 1000px){
+/* @media (max-width: 1000px){
   .like-list{
     height: 103px;
   }
@@ -127,4 +127,4 @@
   .like-info p{
     font-size: .8rem;
   }
-}
+} */

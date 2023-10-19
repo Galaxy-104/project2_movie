@@ -116,7 +116,7 @@
 }
 
 
-@keyframes bounce {
+/* @keyframes bounce {
   0% {top: 7px;}
   100% {top: 0px;}
 }
@@ -329,4 +329,4 @@
   .goleft3 {
     left: -1307px;
 }
-}
+} */

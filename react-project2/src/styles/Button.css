@@ -89,7 +89,7 @@
   display: block;
 }
 
-@media (max-width: 420px){
+/* @media (max-width: 420px){
   .moreBtn{
     border-radius: 10px;
     height: auto;
@@ -113,4 +113,4 @@
     top: -4px;
     right: -2px;
   }
-}
+} */

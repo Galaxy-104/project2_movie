@@ -23,6 +23,7 @@
     overflow: hidden;
 }
 
+/* 회원 계정 정보 수정 */
 .account-page .account-container .account-profile div.user-email{
     display: flex;
     justify-content: center;
@@ -58,9 +59,6 @@
     left: 47px;
     transition: .3s;
 }
-.account-page .account-container .account-profile label.user-password-check svg{
-    opacity: 0;
-}
 
 .account-page .account-container .account-btn-container{
     display: flex;
@@ -71,4 +69,25 @@
 .account-page .account-container .account-profile label span.focus{
     top: 6px;
     font-size: .7rem;
+}
+
+/* 회원이 선택한 좋아하는 장르 수정 */
+.account-page .account-container .account-genres .user-likes{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.account-page .account-container .account-genres .user-likes .input-box{
+    height: 100%;
+    flex-direction: column;
+    /* font-family: 'Black Ops One', cursive; */
+}
+.account-page .account-container .account-genres .user-likes .input-box .inputs{
+    margin-bottom: .2rem;
+}
+.account-page .account-container .account-genres .account-btn-container > button{
+    margin: 0 .5rem;
 }

@@ -93,6 +93,10 @@ function Account(){
 
     }
 
+    const changePage = () => {
+        setIsMovePage(true)
+    }
+
     return (
         <div className="account-page">
             <Nav></Nav>
@@ -101,7 +105,7 @@ function Account(){
                 <div className="account-profile">
                     <AccountProfile userInfo={userInfo} handleChange={passwordErrorLabel}/>
                     <div className="account-btn-container">
-                       <Button>다음</Button> 
+                       <Button handleClick={changePage}>다음</Button> 
                     </div>
                     
                 </div> :
@@ -109,17 +113,14 @@ function Account(){
                 <div className="account-genres">
                     <AccountGenres userInfo={userInfo}/>
                     <div className="account-btn-container">
-                       <Button>이전</Button>
+                       <Button handleClick={changePage}>이전</Button>
                        <Button>수정하기</Button>
                     </div>
                 </div> 
                 : ""
                 }
-                
-                
-                
+
             </div>
-            
         </div>
     )
 }

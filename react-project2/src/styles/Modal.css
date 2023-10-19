@@ -125,7 +125,7 @@
   align-items: center;
 }
 
-@media (max-width: 1000px){
+/* @media (max-width: 1000px){
   .posterSize{
     height: 34%;
   }
@@ -208,4 +208,4 @@
   .youtube{
     top: 4rem;
   }
-}
+} */

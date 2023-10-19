@@ -39,7 +39,7 @@ function AccountProfile({ handleChange, userInfo }){
                     <input type="password" id="user-password" onChange={handleChange}/>
                 </label>
                 <label htmlFor="user-password-check">
-                    <AiFillCheckSquare size="27"/>
+                    <AiFillCheckSquare size="27" style={{ opacity: 0 }}/>
                     <span className="password-label">비밀번호를 다시 입력하세요</span>
                     <input type="password" id="user-password-check" onChange={handleChange}/>
                 </label>

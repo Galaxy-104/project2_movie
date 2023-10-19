@@ -82,7 +82,7 @@
   display: block;
 }
 
-@media (max-width: 1000px){
+/* @media (max-width: 1000px){
   .Nav{
     height: 5rem;
   }
@@ -151,4 +151,4 @@
   .btn-box > div{
     font-size: .5rem;
   }
-}
+} */

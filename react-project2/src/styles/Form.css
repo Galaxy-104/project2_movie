@@ -2,7 +2,7 @@
   color: var(--font-color);
 }
 
-input {
+input:not([type="checkbox"]) {
   width: 300px;
   height: 40px;
   background-color: transparent;
