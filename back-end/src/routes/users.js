@@ -90,6 +90,35 @@ router.get('/', expressAsyncHandler(async (req, res, next) => {
   }
 }))
 
+// 회원 정보 수정
+router.put('/account', isAuth, expressAsyncHandler(async (req, res, next) => {
+  const user = await User.updateOne(
+    { _id: req.user._id },
+    { $set: { 
+        userId: req.body.userId,
+        likeGenre: req.body.likeGenre,
+        lastModifiedAt: Date.now()
+      }}  
+  )
+  if(req.body.password !== ""){
+    const user = await User.updateOne(
+      { _id: req.user._id },
+      { $set: { password: req.body.password }}
+    )
+  }
+
+  if(!user){
+    res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})
+  }else{
+    res.json({
+      code: 200,
+      message: '회원 정보가 수정되었습니다.'
+    })
+  }
+
+   
+}))
+
 //좋아하는 영화 목록에 추가
 router.put('/likeMovie', isAuth, expressAsyncHandler(async (req, res, next) => {
   const movie = await User.updateOne(
