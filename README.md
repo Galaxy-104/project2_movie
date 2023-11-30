@@ -1,9 +1,13 @@
 
 <img src="https://github.com/Galaxy-104/project2_movie/blob/develop/react-project2/src/assets/logo.png" width="500" height="100" />
 
----
 
-**MOOD**는 영화를 주제로 이상형 월드컵을 진행할 수 있습니다.
+
+**MOOD**는 영화를 주제로 이상형 월드컵을 진행할 수 있습니다.  
+1등으로 뽑은 영화의 장르를 토대로 영화를 추천드립니다.  
+추천받고 싶은 장르는 언제든지 변경할 수 있습니다.  
+
+---
 
 ### - 내 마음속의 1등 영화는 무엇일까요?
 
